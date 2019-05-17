@@ -1,27 +1,52 @@
 {
   "config": {
-    "title": "Magic Scroll.js",
-    "description": "A simplified bare-bones starter for Gatsby",
+    "title": "My Cool Project",
+    "description": "This is my awesome documentation",
     "menu": [],
     "version": "0.1.0",
     "repository": "https://github.com/YvesCoding/magic-scroll",
     "native": false,
     "codeSandbox": true,
-    "themeConfig": {},
-    "separator": "-"
+    "themeConfig": {
+      "colors": {
+        "primary": "tomato"
+      }
+    },
+    "separator": "-",
+    "theme": "docz-theme-magic-scroll"
   },
   "props": [],
   "entries": [
     {
-      "key": "index.mdx",
+      "key": "docs/index.mdx",
       "value": {
         "name": "Hello world",
-        "route": "/",
-        "id": "91149a4106ab27ef746308b41227aca8",
-        "filepath": "index.mdx",
-        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\index.mdx",
-        "slug": "index",
+        "route": "/test/q",
+        "id": "73498ad0e1e62a714b08085d318f9de1",
+        "filepath": "docs/index.mdx",
+        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/index.mdx",
+        "slug": "docs-index",
         "menu": "",
+        "headings": [
+          {
+            "slug": "hello-world",
+            "depth": 1,
+            "value": "Hello world"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/test.mdx",
+      "value": {
+        "name": "Hello world1123",
+        "fullpage": true,
+        "route": "/test",
+        "menu": "q",
+        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/test.mdx",
+        "id": "2978dfd8e87a69f937a16a4f9dbcb37e",
+        "filepath": "docs/test.mdx",
+        "slug": "docs-test",
         "headings": [
           {
             "slug": "hello-world",

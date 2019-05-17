@@ -4,7 +4,7 @@ import { useStaticQuery, graphql } from 'gatsby'
 import { AsyncRoute, useComponents } from 'docz'
 import { MDXProvider } from '@mdx-js/react'
 
-import Theme from 'docz-theme-default'
+import Theme from 'docz-theme-magic-scroll'
 
 import { Link } from './Link'
 import SEO from './Seo'
