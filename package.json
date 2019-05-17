@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "docz": "^1.2.0",
-    "docz-theme-magic-scroll": "^0.0.1",
+    "docz-theme-magic-scroll": "^0.0.2",
     "gatsby-theme-docz": "^1.2.0",
     "prettier": "^1.17.1"
   },
