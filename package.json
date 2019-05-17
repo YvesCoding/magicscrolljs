@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "gatsby": "^2.4.5",
+    "magic-scroll": "^0.0.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

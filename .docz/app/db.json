@@ -21,7 +21,7 @@
       "key": "docs/index.mdx",
       "value": {
         "name": "Hello world",
-        "route": "/test/q",
+        "route": "/",
         "id": "73498ad0e1e62a714b08085d318f9de1",
         "filepath": "docs/index.mdx",
         "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/index.mdx",
@@ -43,9 +43,9 @@
         "fullpage": true,
         "route": "/test",
         "menu": "q",
-        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/test.mdx",
         "id": "2978dfd8e87a69f937a16a4f9dbcb37e",
         "filepath": "docs/test.mdx",
+        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/test.mdx",
         "slug": "docs-test",
         "headings": [
           {
