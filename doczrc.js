@@ -1,5 +1,5 @@
 export default {
-  title: "My Cool Project",
+  title: "Magic Scroll",
   theme: "docz-theme-magic-scroll",
   description: "This is my awesome documentation",
   themeConfig: {

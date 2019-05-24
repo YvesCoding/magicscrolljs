@@ -1,6 +1,6 @@
 {
   "config": {
-    "title": "My Cool Project",
+    "title": "Magic Scroll",
     "description": "This is my awesome documentation",
     "menu": [
       "Introduction",
@@ -19,6 +19,40 @@
     "theme": "docz-theme-magic-scroll"
   },
   "entries": [
+    {
+      "key": "docs/Introduction.mdx",
+      "value": {
+        "name": "Introduction",
+        "route": "/",
+        "id": "c15c39e1d1431a3c37997b39e9e6d8fd",
+        "filepath": "docs/Introduction.mdx",
+        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/Introduction.mdx",
+        "slug": "docs-introduction",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "introduction",
+            "depth": 1,
+            "value": "Introduction"
+          },
+          {
+            "slug": "magic-scroll",
+            "depth": 2,
+            "value": "Magic-scroll"
+          },
+          {
+            "slug": "features",
+            "depth": 2,
+            "value": "Features"
+          },
+          {
+            "slug": "similar-things",
+            "depth": 2,
+            "value": "Similar things"
+          }
+        ]
+      }
+    },
     {
       "key": "docs/get-started.mdx",
       "value": {
@@ -57,38 +91,7 @@
           }
         ]
       }
-    },
-    {
-      "key": "docs/Introduction.mdx",
-      "value": {
-        "name": "Introduction",
-        "route": "/",
-        "id": "c15c39e1d1431a3c37997b39e9e6d8fd",
-        "filepath": "docs/Introduction.mdx",
-        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/Introduction.mdx",
-        "slug": "docs-introduction",
-        "menu": "",
-        "headings": [
-          {
-            "slug": "introduction",
-            "depth": 1,
-            "value": "Introduction"
-          }
-        ]
-      }
     }
   ],
-  "props": [
-    {
-      "key": "docs\\components\\usage\\index.js",
-      "value": [
-        {
-          "description": "",
-          "displayName": "Usage",
-          "methods": [],
-          "actualName": "Usage"
-        }
-      ]
-    }
-  ]
+  "props": []
 }
