@@ -26,7 +26,7 @@
         "route": "/",
         "id": "c15c39e1d1431a3c37997b39e9e6d8fd",
         "filepath": "docs/Introduction.mdx",
-        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/Introduction.mdx",
+        "link": "https://github.com/YvesCoding/magic-scroll/edit/master/docs/Introduction.mdx",
         "slug": "docs-introduction",
         "menu": "",
         "headings": [
@@ -60,7 +60,7 @@
         "route": "/get-started",
         "id": "9278848e98ed601433be4607587f38ce",
         "filepath": "docs/get-started.mdx",
-        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/get-started.mdx",
+        "link": "https://github.com/YvesCoding/magic-scroll/edit/master/docs/get-started.mdx",
         "slug": "docs-get-started",
         "menu": "",
         "headings": [
