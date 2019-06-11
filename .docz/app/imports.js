@@ -1,10 +1,14 @@
 export const imports = {
+  'docs/get-started.mdx': () =>
+    import(
+      /* webpackPrefetch: true, webpackChunkName: "docs-get-started" */ 'docs/get-started.mdx'
+    ),
   'docs/Introduction.mdx': () =>
     import(
       /* webpackPrefetch: true, webpackChunkName: "docs-introduction" */ 'docs/Introduction.mdx'
     ),
-  'docs/get-started.mdx': () =>
+  'docs/props.mdx': () =>
     import(
-      /* webpackPrefetch: true, webpackChunkName: "docs-get-started" */ 'docs/get-started.mdx'
+      /* webpackPrefetch: true, webpackChunkName: "docs-props" */ 'docs/props.mdx'
     ),
 }

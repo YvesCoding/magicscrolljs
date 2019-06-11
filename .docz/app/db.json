@@ -20,47 +20,13 @@
   },
   "entries": [
     {
-      "key": "docs/Introduction.mdx",
-      "value": {
-        "name": "Introduction",
-        "route": "/",
-        "id": "c15c39e1d1431a3c37997b39e9e6d8fd",
-        "filepath": "docs/Introduction.mdx",
-        "link": "https://github.com/YvesCoding/magic-scroll/edit/master/docs/Introduction.mdx",
-        "slug": "docs-introduction",
-        "menu": "",
-        "headings": [
-          {
-            "slug": "introduction",
-            "depth": 1,
-            "value": "Introduction"
-          },
-          {
-            "slug": "magic-scroll",
-            "depth": 2,
-            "value": "Magic-scroll"
-          },
-          {
-            "slug": "features",
-            "depth": 2,
-            "value": "Features"
-          },
-          {
-            "slug": "similar-things",
-            "depth": 2,
-            "value": "Similar things"
-          }
-        ]
-      }
-    },
-    {
       "key": "docs/get-started.mdx",
       "value": {
         "name": "Get Started",
         "route": "/get-started",
         "id": "9278848e98ed601433be4607587f38ce",
         "filepath": "docs/get-started.mdx",
-        "link": "https://github.com/YvesCoding/magic-scroll/edit/master/docs/get-started.mdx",
+        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/get-started.mdx",
         "slug": "docs-get-started",
         "menu": "",
         "headings": [
@@ -88,6 +54,59 @@
             "slug": "usage",
             "depth": 2,
             "value": "Usage"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/Introduction.mdx",
+      "value": {
+        "name": "Introduction",
+        "route": "/",
+        "id": "c15c39e1d1431a3c37997b39e9e6d8fd",
+        "filepath": "docs/Introduction.mdx",
+        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/Introduction.mdx",
+        "slug": "docs-introduction",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "introduction",
+            "depth": 1,
+            "value": "Introduction"
+          },
+          {
+            "slug": "magic-scroll",
+            "depth": 2,
+            "value": "Magic-scroll"
+          },
+          {
+            "slug": "features",
+            "depth": 2,
+            "value": "Features"
+          },
+          {
+            "slug": "similar-things",
+            "depth": 2,
+            "value": "Similar things"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/props.mdx",
+      "value": {
+        "name": "Props",
+        "route": "/props",
+        "id": "08ea812f05c4b0e2933fae16b284f8e3",
+        "filepath": "docs/props.mdx",
+        "link": "https://github.com/YvesCoding/magic-scroll\\edit\\master\\docs/props.mdx",
+        "slug": "docs-props",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "props",
+            "depth": 1,
+            "value": "Props"
           }
         ]
       }

@@ -1,13 +1,15 @@
 import React from "react"
 import Scrollbar from "magic-scroll"
-import "./index.scss"
+import "./base.scss"
 
-export const Usage = () => {
+const Base = (props = {}) => {
   return (
     <div className="parent-dom">
-      <Scrollbar keepBarShow>
+      <Scrollbar {...props}>
         <div className="child-dom" />
       </Scrollbar>
     </div>
   )
 }
+
+export default Base

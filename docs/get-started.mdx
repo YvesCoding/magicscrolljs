@@ -3,7 +3,7 @@ name: Get Started
 route: /get-started
 ---
 
-import { Usage } from "./components/usage"
+import Base from "./components/base"
 
 # Get Started
 
@@ -23,13 +23,13 @@ yarn add magic-scroll
 
 ## Usage
 
-1. **import magic-scroll**
+**import magic-scroll**
 
 ```javascript
 import Scrollbar from "magic-scroll"
 ```
 
-2. **And then wrap the content by magic-scroll**
+**And then wrap the content by magic-scroll**
 
 ```javascript
 <div class="parent-dom">
@@ -39,6 +39,8 @@ import Scrollbar from "magic-scroll"
 </div>
 ```
 
-3.That's all ! You will see the customize scrollbar show up !
+**And then, you will see a custom scrollbar like this.**
 
-<Usage />
+<Base keepBarShow />
+
+> Next, I think you should learn [Api](/api) and [Props](/props)
