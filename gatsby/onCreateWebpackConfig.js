@@ -16,11 +16,4 @@ module.exports = ({ stage, actions, loaders }) => {
     });
     return;
   }
-  actions.setWebpackConfig({
-    externals: {
-      '@antv/data-set': 'DataSet',
-      react: 'React',
-      'react-dom': 'ReactDOM',
-    },
-  });
 };

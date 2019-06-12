@@ -7,6 +7,17 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: 'gatsby-mdx',
+      options: {
+        extensions: ['.md', '.mdx'],
+        globalScope: `
+        import Scrollbar from "magic-scroll";
+
+        export default Scrollbar;
+      `,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-less',
       options: {
         javascriptEnabled: true,
@@ -75,6 +86,5 @@ module.exports = {
       },
     },
     `gatsby-plugin-sitemap`,
-    `gatsby-mdx`,
   ],
 };

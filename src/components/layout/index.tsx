@@ -9,7 +9,7 @@ import * as utils from '../utils';
 import '../../static/style';
 import Header from './Header';
 import Footer from './Footer';
-import Scrollbar, { GlobarBarOptionsContext } from 'magic-scroll';
+// import Scrollbar, { GlobarBarOptionsContext } from 'magic-scroll';
 
 interface LayoutProps {
   location: {
@@ -44,29 +44,21 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     const { pathname } = location;
     const { appLocale, contentHeight } = this.state;
     return (
-      <GlobarBarOptionsContext.Provider
-        value={{
-          barBg: '#1890ff',
-        }}
-      >
-        <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
-          <LocaleProvider locale={enUS}>
-            <Scrollbar style={{ height: contentHeight }}>
-              <div
-                className={`page-wrapper ${(pathname === '/' || pathname === 'index-cn') &&
-                  'index-page-wrapper'}`}
-              >
-                <Header {...restProps} location={location} />
-                {React.cloneElement(children, {
-                  ...children.props,
-                  isMobile: restProps.isMobile,
-                })}
-                <Footer {...restProps} location={location} />
-              </div>
-            </Scrollbar>
-          </LocaleProvider>
-        </IntlProvider>
-      </GlobarBarOptionsContext.Provider>
+      <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
+        <LocaleProvider locale={enUS}>
+          <div
+            className={`page-wrapper ${(pathname === '/' || pathname === 'index-cn') &&
+              'index-page-wrapper'}`}
+          >
+            <Header {...restProps} location={location} />
+            {React.cloneElement(children, {
+              ...children.props,
+              isMobile: restProps.isMobile,
+            })}
+            <Footer {...restProps} location={location} />
+          </div>
+        </LocaleProvider>
+      </IntlProvider>
     );
   }
 
