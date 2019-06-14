@@ -19,10 +19,10 @@ module.exports = async ({ graphql, actions }) => {
     toPath: '/',
   });
 
-  const allMarkdown = await graphql(
+  const allMdx = await graphql(
     `
       {
-        allMarkdownRemark(limit: 1000) {
+        allMdx(limit: 1000) {
           edges {
             node {
               fields {
@@ -37,14 +37,14 @@ module.exports = async ({ graphql, actions }) => {
     `
   );
 
-  if (allMarkdown.errors) {
-    console.error(allMarkdown.errors);
+  if (allMdx.errors) {
+    console.error(allMdx.errors);
 
-    throw Error(allMarkdown.errors);
+    throw Error(allMdx.errors);
   }
   const redirects = {};
 
-  const edges = allMarkdown.data.allMarkdownRemark.edges;
+  const edges = allMdx.data.allMdx.edges;
   edges.forEach(edge => {
     const { slug, underScoreCasePath } = edge.node.fields;
     if (slug.includes('docs/') || slug.includes('/blog')) {

@@ -44,28 +44,6 @@ module.exports = {
         path: `${__dirname}/docs/`,
       },
     },
-    // {
-    //   resolve: 'gatsby-source-filesystem',
-    //   options: {
-    //     name: '/blog',
-    //     path: `${__dirname}/blog/`,
-    //   },
-    // },
-    {
-      resolve: 'gatsby-transformer-remark-antd',
-      options: {
-        plugins: [
-          'gatsby-remark-header-custom-ids',
-          'gatsby-remark-img-warpper-p',
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              noInlineHighlight: true,
-            },
-          },
-        ],
-      },
-    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {

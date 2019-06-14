@@ -8,12 +8,15 @@ import EditButton from './EditButton';
 import { IFrontmatterData } from '../../templates/docs';
 import moment from 'moment';
 import AvatarList from './AvatarList';
+import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 
 interface ArticleProps {
   content: {
     meta: IFrontmatterData;
     toc: string | false;
-    content: string;
+    code: {
+      body: string;
+    };
   };
 }
 
@@ -50,6 +53,7 @@ export default class Article extends React.PureComponent<ArticleProps> {
   render() {
     const props = this.props;
     const content = props.content;
+    debugger;
     const { meta } = content;
     const { title, subtitle, path, modifiedTime, avatarList } = meta;
     const {
@@ -60,7 +64,7 @@ export default class Article extends React.PureComponent<ArticleProps> {
       };
     };
     return (
-      <DocumentTitle title={`${title[locale] || title} - Magic Scroll`}>
+      <DocumentTitle title={`${title} - Magic Scroll`}>
         <>
           <article
             className="markdown"
@@ -69,7 +73,7 @@ export default class Article extends React.PureComponent<ArticleProps> {
             }}
           >
             <h1>
-              {title[locale] || title}
+              {title}
               {!subtitle || locale === 'en-US' ? null : (
                 <span className="subtitle">{subtitle}</span>
               )}
@@ -85,10 +89,9 @@ export default class Article extends React.PureComponent<ArticleProps> {
                 />
               </Affix>
             )}
-            <section
-              className="markdown api-container"
-              dangerouslySetInnerHTML={{ __html: content.content }}
-            />
+            <section className="markdown api-container">
+              <MDXRenderer>{content.code.body}</MDXRenderer>
+            </section>
           </article>
           <div className="modifiedTime">
             {/* <AvatarList avatarList={avatarList} /> */}

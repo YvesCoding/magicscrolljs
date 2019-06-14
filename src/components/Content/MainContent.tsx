@@ -21,7 +21,9 @@ export interface MainContentProps {
   localizedPageData: {
     meta: IFrontmatterData;
     toc: string | false;
-    content: string;
+    code: {
+      body: string;
+    };
   };
 }
 
@@ -136,7 +138,7 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
       };
     };
     const text = [
-      <span key="english">{item.title[locale] || item.title}</span>,
+      <span key="english">{item.title}</span>,
       <span className="chinese" key="chinese">
         {locale === 'zh-CN' && item.subtitle}
       </span>,
@@ -170,13 +172,6 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
   };
 
   generateSubMenuItems = (obj?: IMenuData, footerNavIcons = {}) => {
-    const {
-      intl: { locale },
-    } = this.context as {
-      intl: {
-        locale: 'zh-CN' | 'en-US';
-      };
-    };
     if (!obj) return [];
     const topLevel = ((obj.topLevel as MenuDataItem[]) || []).map(
       this.generateMenuItem.bind(this, footerNavIcons)
@@ -189,7 +184,7 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
             if ('order' in a && 'order' in b) {
               return a.order - b.order;
             }
-            return a.title[locale].charCodeAt(0) - b.title[locale].charCodeAt(0);
+            return a.title.charCodeAt(0) - b.title.charCodeAt(0);
           })
           .map(this.generateMenuItem.bind(this, footerNavIcons));
         return (

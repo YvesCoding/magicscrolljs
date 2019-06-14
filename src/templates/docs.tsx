@@ -2,7 +2,6 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import WrapperLayout from '../components/layout';
 import MainContent from '../components/Content/MainContent';
-import { transformerFrontmatter } from '../components/utils';
 
 interface IMarkDownFields {
   path: string;
@@ -15,10 +14,7 @@ interface IMarkDownFields {
   }>;
 }
 export interface IFrontmatterData extends IMarkDownFields {
-  title: {
-    'zh-CN': string;
-    'en-US': string;
-  };
+  title: string;
   toc: string | boolean;
   order: number;
   type: string;
@@ -32,20 +28,19 @@ export interface IFrontmatterData extends IMarkDownFields {
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export interface IGraphqlFrontmatterData extends Omit<IFrontmatterData, 'title'> {
-  title: {
-    zh_CN: string;
-    en_US: string;
-  };
+  title: string;
 }
 
-export interface IMarkdownRemarkData {
-  html: string;
+export interface IMdxData {
+  code: {
+    body: string;
+  };
   tableOfContents: string;
   frontmatter: IGraphqlFrontmatterData;
   fields: IMarkDownFields;
 }
 
-export interface IAllMarkdownRemarkData {
+export interface IAllMdxData {
   edges: Array<{
     node: {
       frontmatter: IGraphqlFrontmatterData;
@@ -58,17 +53,17 @@ export default function Template({
   data,
   ...rest
 }: {
-  data: { markdownRemark: IMarkdownRemarkData; allMarkdownRemark: IAllMarkdownRemarkData };
+  data: { mdx: IMdxData; allMdx: IAllMdxData };
   isMobile: boolean;
   location: {
     pathname: string;
   };
 }) {
-  const { markdownRemark, allMarkdownRemark } = data;
-  const { frontmatter, fields, html, tableOfContents } = markdownRemark;
-  const { edges } = allMarkdownRemark;
+  const { mdx, allMdx } = data;
+  const { frontmatter, fields, code, tableOfContents } = mdx;
+  const { edges } = allMdx;
   const menuList = edges.map(({ node }) => {
-    const newFrontmatter = transformerFrontmatter(node.frontmatter);
+    const newFrontmatter = node.frontmatter;
     return {
       slug: node.fields.slug,
       meta: {
@@ -86,13 +81,13 @@ export default function Template({
         {...rest}
         localizedPageData={{
           meta: {
-            ...transformerFrontmatter(frontmatter),
+            ...frontmatter,
             ...fields,
             filename: fields.slug,
             path: fields.path,
           },
           toc: tableOfContents,
-          content: html,
+          code,
         }}
         menuList={menuList}
       />
@@ -101,43 +96,36 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query TemplateDocsMarkdown($slug: String!, $type: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
-      tableOfContents(maxDepth: 3)
-      frontmatter {
-        title {
-          zh_CN
-          en_US
-        }
-        order
-        type
-      }
-      fields {
-        path
-        slug
-        modifiedTime
-      }
-    }
-    allMarkdownRemark(
-      filter: { fileAbsolutePath: { regex: $type } }
-      sort: { fields: [fields___slug], order: DESC }
-    ) {
+  query TemplateDocsMarkdown($slug: String!) {
+    allMdx(sort: { fields: fields___slug, order: DESC }) {
       edges {
         node {
+          code {
+            body
+          }
           frontmatter {
-            title {
-              zh_CN
-              en_US
-            }
-            order
+            title
             type
+            order
           }
           fields {
             slug
             path
           }
         }
+      }
+    }
+    mdx(fields: { slug: { eq: $slug } }) {
+      tableOfContents
+      frontmatter {
+        order
+        title
+        type
+      }
+      fields {
+        modifiedTime
+        path
+        slug
       }
     }
   }
