@@ -1,5 +1,9 @@
 var path = require('path');
 
+function getPlugin(pluginName) {
+  return path.resolve(__dirname, `./plugins/${pluginName}/index.js`);
+}
+
 module.exports = {
   siteMetadata: {
     title: 'Magic Scroll',
@@ -19,7 +23,16 @@ module.exports = {
       `,
         gatsbyRemarkPlugins: [
           {
-            resolve: path.resolve(__dirname, './plugins/gatsby-remark-header-custom-ids/index.js'),
+            resolve: getPlugin('gatsby-remark-header-custom-ids'),
+          },
+          {
+            resolve: getPlugin('gatsby-remark-img-warpper-p'),
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              noInlineHighlight: true,
+            },
           },
         ],
       },

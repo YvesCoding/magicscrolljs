@@ -89,7 +89,7 @@ export default class Article extends React.PureComponent<ArticleProps> {
                 <ul className="toc">
                   {content.toc.items.map(item => {
                     return (
-                      <li>
+                      <li key={item.url}>
                         <a href={item.url}>{item.title}</a>
                       </li>
                     );

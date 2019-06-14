@@ -48,14 +48,14 @@ module.exports = ({ markdownAST }, { icon = '#', className = `anchor`, maintainC
             'aria-hidden': true,
             class: className,
           },
-          hChildren: [
-            {
-              type: 'raw',
-              // The Octicon link icon is the default. But users can set their own icon via the "icon" option.
-              value: icon,
-            },
-          ],
         },
+        children: [
+          {
+            type: 'text',
+            // The Octicon link icon is the default. But users can set their own icon via the "icon" option.
+            value: icon,
+          },
+        ],
       });
     }
   });

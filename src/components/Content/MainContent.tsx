@@ -287,16 +287,16 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
           <Col lg={{ span: 20, offset: 4 }} md={24} sm={24} xs={24}>
             <section className="prev-next-nav">
               {prev ? (
-                <a className="prev-page">
+                <div className="prev-page">
                   <Icon className="footer-nav-icon-before" type="left" />
                   {prev.props.children}
-                </a>
+                </div>
               ) : null}
               {next ? (
-                <a className="next-page">
+                <div className="next-page">
                   {next.props.children}
                   <Icon className="footer-nav-icon-after" type="right" />
-                </a>
+                </div>
               ) : null}
             </section>
           </Col>
