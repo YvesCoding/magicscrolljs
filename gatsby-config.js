@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
   siteMetadata: {
     title: 'Magic Scroll',
@@ -15,6 +17,11 @@ module.exports = {
 
         export default Scrollbar;
       `,
+        gatsbyRemarkPlugins: [
+          {
+            resolve: path.resolve(__dirname, './plugins/gatsby-remark-header-custom-ids/index.js'),
+          },
+        ],
       },
     },
     {
