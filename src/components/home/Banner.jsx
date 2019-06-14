@@ -40,6 +40,12 @@ function Banner(props) {
               <FormattedMessage id="app.home.start" />
             </Button>
           </Link>
+          <GitHubButton
+            key="github-button"
+            type="stargazers"
+            namespace="ant-design"
+            repo="ant-design-pro"
+          />
           {/* <GitHubButton
             key="github-button"
             type="stargazers"

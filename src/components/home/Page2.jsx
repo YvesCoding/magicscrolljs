@@ -16,7 +16,7 @@ function Page2({ location }) {
           <div className="title-line" />
         </div>
         <h2>快速开始</h2>
-        <OverPack>
+        <OverPack always={true}>
           <QueueAnim key="queue" type="bottom" leaveReverse className="page2-content">
             <p key="p" className="page-content">
               运行下列命令开始开始 （请确保开始之前你已经启动了one的后端项目）

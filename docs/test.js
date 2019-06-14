@@ -1,5 +1,11 @@
 import React from 'react';
-
+import Scrollbar from 'magic-scroll';
 export default () => {
-  return <scrollbar>123</scrollbar>;
+  return (
+    <div className="parent-dom">
+      <Scrollbar>
+        <div className="child-dom"></div>
+      </Scrollbar>
+    </div>
+  );
 };
