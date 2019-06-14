@@ -13,7 +13,12 @@ import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 interface ArticleProps {
   content: {
     meta: IFrontmatterData;
-    toc: string | false;
+    toc: {
+      items: Array<{
+        url: string;
+        title: string;
+      }>;
+    };
     code: {
       body: string;
     };
@@ -53,7 +58,6 @@ export default class Article extends React.PureComponent<ArticleProps> {
   render() {
     const props = this.props;
     const content = props.content;
-    debugger;
     const { meta } = content;
     const { title, subtitle, path, modifiedTime, avatarList } = meta;
     const {
@@ -80,13 +84,17 @@ export default class Article extends React.PureComponent<ArticleProps> {
               <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={path} />
             </h1>
 
-            {!content.toc || content.toc.length <= 1 || meta.toc === false ? null : (
+            {!content.toc.items.length ? null : (
               <Affix className="toc-affix" offsetTop={16}>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: content.toc.replace(/<ul>/g, '<ul class="toc">').replace(/\/#/g, '#'),
-                  }}
-                />
+                <ul className="toc">
+                  {content.toc.items.map(item => {
+                    return (
+                      <li>
+                        <a href={item.url}>{item.title}</a>
+                      </li>
+                    );
+                  })}
+                </ul>
               </Affix>
             )}
             <section className="markdown api-container">

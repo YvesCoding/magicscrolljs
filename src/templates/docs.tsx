@@ -15,7 +15,6 @@ interface IMarkDownFields {
 }
 export interface IFrontmatterData extends IMarkDownFields {
   title: string;
-  toc: string | boolean;
   order: number;
   type: string;
   filename: string;
@@ -35,7 +34,12 @@ export interface IMdxData {
   code: {
     body: string;
   };
-  tableOfContents: string;
+  tableOfContents: {
+    items: Array<{
+      url: string;
+      title: string;
+    }>;
+  };
   frontmatter: IGraphqlFrontmatterData;
   fields: IMarkDownFields;
 }
@@ -126,6 +130,9 @@ export const pageQuery = graphql`
         modifiedTime
         path
         slug
+      }
+      code {
+        body
       }
     }
   }

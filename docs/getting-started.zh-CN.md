@@ -4,9 +4,9 @@ title: 开始使用
 type: 快速上手
 ---
 
-<Scrollbar>
-123
-</Scrollbar>
+import Test from './test';
+
+<Test />
 
 ## 简介
 

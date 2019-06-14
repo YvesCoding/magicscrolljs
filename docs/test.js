@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default () => {
-  return <div>123</div>;
+  return <scrollbar>123</scrollbar>;
 };

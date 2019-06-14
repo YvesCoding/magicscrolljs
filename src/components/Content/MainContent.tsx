@@ -20,7 +20,12 @@ export interface MainContentProps {
   menuList: MenuDataItem[];
   localizedPageData: {
     meta: IFrontmatterData;
-    toc: string | false;
+    toc: {
+      items: Array<{
+        url: string;
+        title: string;
+      }>;
+    };
     code: {
       body: string;
     };
