@@ -41,6 +41,7 @@
     "react-document-title": "^2.0.3",
     "react-github-button": "^0.1.11",
     "react-intl": "^2.4.0",
+    "react-live": "^2.1.2",
     "react-media": "^1.9.2"
   },
   "devDependencies": {
