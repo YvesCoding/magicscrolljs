@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
@@ -9,7 +10,9 @@ import * as utils from '../utils';
 import '../../static/style';
 import Header from './Header';
 import Footer from './Footer';
-// import Scrollbar, { GlobarBarOptionsContext } from 'magic-scroll';
+import Scrollbar from 'magic-scroll';
+
+export const contentContext = React.createContext(0);
 
 interface LayoutProps {
   location: {
@@ -24,7 +27,8 @@ interface LayoutState {
     locale: any;
     messages: any;
   };
-  contentHeight: Number;
+  pageHeight: number;
+  contentHeight: number;
 }
 
 export class Layout extends React.Component<LayoutProps, LayoutState> {
@@ -35,6 +39,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     addLocaleData(appLocale.data);
     this.state = {
       appLocale,
+      pageHeight: 0,
       contentHeight: 0,
     };
   }
@@ -42,7 +47,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   render() {
     const { children, location, ...restProps } = this.props;
     const { pathname } = location;
-    const { appLocale, contentHeight } = this.state;
+    const { appLocale, pageHeight, contentHeight } = this.state;
     return (
       <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
         <LocaleProvider locale={enUS}>
@@ -50,12 +55,23 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
             className={`page-wrapper ${(pathname === '/' || pathname === 'index-cn') &&
               'index-page-wrapper'}`}
           >
-            <Header {...restProps} location={location} />
-            {React.cloneElement(children, {
-              ...children.props,
-              isMobile: restProps.isMobile,
-            })}
-            <Footer {...restProps} location={location} />
+            <Scrollbar
+              scrollingX={false}
+              style={{ height: pageHeight + 'px' }}
+              barBg="#1890ff"
+              railCls="page-rail"
+            >
+              <Header {...restProps} location={location} ref="header" />
+              <div style={{ minHeight: contentHeight + 'px' }}>
+                <contentContext.Provider value={contentHeight}>
+                  {React.cloneElement(children, {
+                    ...children.props,
+                    isMobile: restProps.isMobile,
+                  })}
+                </contentContext.Provider>
+              </div>
+              <Footer {...restProps} location={location} ref="footer" />
+            </Scrollbar>
           </div>
         </LocaleProvider>
       </IntlProvider>
@@ -73,8 +89,16 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
   ajustScrollbarHeight = () => {
     this.setState({
-      contentHeight: window.innerHeight,
+      pageHeight: window.innerHeight,
+      contentHeight:
+        window.innerHeight -
+        this.getDomByRef('header').offsetHeight -
+        this.getDomByRef('footer').offsetHeight,
     });
+  };
+
+  getDomByRef = (ref: 'header' | 'footer'): HTMLDivElement => {
+    return ReactDom.findDOMNode(this.refs[ref]) as HTMLDivElement;
   };
 }
 

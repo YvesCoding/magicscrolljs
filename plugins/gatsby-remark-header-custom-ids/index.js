@@ -51,7 +51,7 @@ module.exports = ({ markdownAST }, { icon = '#', className = `anchor`, maintainC
         },
         children: [
           {
-            type: 'text',
+            type: 'raw',
             // The Octicon link icon is the default. But users can set their own icon via the "icon" option.
             value: icon,
           },

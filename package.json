@@ -51,6 +51,7 @@
     "@babel/traverse": "^7.0.0",
     "@mdx-js/mdx": "^1.0.0-rc.4",
     "@mdx-js/react": "^1.0.0-rc.5",
+    "@types/react-dom": "^16.8.4",
     "antd-tools": "^7.3.5",
     "classnames": "^2.2.5",
     "commander": "~2.17.0",
