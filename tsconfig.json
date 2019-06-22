@@ -9,6 +9,7 @@
     "noUnusedLocals": true,
     "noImplicitAny": true,
     "target": "es6",
+    "allowSyntheticDefaultImports": true,
     "lib": ["dom", "es2017"]
   },
   "exclude": ["node_modules", "lib", "es"]

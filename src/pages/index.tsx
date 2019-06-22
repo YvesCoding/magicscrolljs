@@ -3,6 +3,7 @@ import Media from 'react-media';
 
 import Home from '../components/home';
 import WrapperLayout from '../components/layout';
+import { graphql } from 'gatsby';
 
 const IndexPage = props => {
   const isNode = typeof window === `undefined`;
@@ -16,3 +17,19 @@ const IndexPage = props => {
 };
 
 export default IndexPage;
+
+export const pageQuery = graphql`
+  query queryAllSnippets {
+    allMdx(filter: { fields: { slug: { glob: "snippet-*" } } }) {
+      nodes {
+        fields {
+          slug
+          path
+        }
+        code {
+          body
+        }
+      }
+    }
+  }
+`;

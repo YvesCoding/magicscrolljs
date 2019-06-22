@@ -249,7 +249,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                 src="https://gw.alipayobjects.com/zos/rmsportal/tNoOLUAkyuGLXoZvaibF.svg"
                 alt="Ant Design Pro"
               /> */}
-              Magic Scroll 文档
+              MagicScroll.js
             </Link>
           </Col>
           <Col xxl={20} xl={19} lg={16} md={16} sm={0} xs={0}>
@@ -264,11 +264,11 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             </div>
             <div className="header-meta">
               <div className="right-header">
-                {/* <div id="lang">
+                <div id="lang">
                   <Button onClick={this.handleLangChange} size="small">
                     <FormattedMessage id="app.header.lang" />
                   </Button>
-                </div> */}
+                </div>
                 {/* <div id="preview">
                   <a
                     id="preview-button"

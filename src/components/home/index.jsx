@@ -9,7 +9,7 @@ import Page2 from './Page2';
 function Home(props) {
   const { intl } = props;
   return (
-    <DocumentTitle title="one-front">
+    <DocumentTitle title="Magic Scroll">
       <div className="home-wrapper">
         <Banner {...props} />
         {/* <Page1 {...props} /> */}

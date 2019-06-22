@@ -11,6 +11,7 @@ import '../../static/style';
 import Header from './Header';
 import Footer from './Footer';
 import Scrollbar from 'magic-scroll';
+import { graphql } from 'gatsby';
 
 export const contentContext = React.createContext(0);
 
@@ -60,6 +61,8 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
               style={{ height: pageHeight + 'px' }}
               barBg="#1890ff"
               railCls="page-rail"
+              ref="scrollbar"
+              renderPanel={this.renderPanel}
             >
               <Header {...restProps} location={location} ref="header" />
               <div style={{ minHeight: contentHeight + 'px' }}>
@@ -99,6 +102,11 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
   getDomByRef = (ref: 'header' | 'footer'): HTMLDivElement => {
     return ReactDom.findDOMNode(this.refs[ref]) as HTMLDivElement;
+  };
+
+  renderPanel = (props: any) => {
+    const mergeProps = { ...props, id: 'layout-panel' };
+    return <div {...mergeProps}></div>;
   };
 }
 

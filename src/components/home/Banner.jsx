@@ -28,7 +28,9 @@ function Banner(props) {
           <div className="title-line" style={{ transform: 'translateX(-64px)' }} />
         </div>
         <h1 key="h1">Magic Scroll</h1>
-        <p key="content">极速开发平台 - 前端</p>
+        <p key="content">
+          <FormattedMessage id="app.home.slogan" />
+        </p>
         <div key="button" className="button-wrapper">
           {/* <a href="http://preview.pro.ant.design" target="_blank" rel="noopener noreferrer">
             <Button type="primary">
@@ -43,8 +45,8 @@ function Banner(props) {
           <GitHubButton
             key="github-button"
             type="stargazers"
-            namespace="ant-design"
-            repo="ant-design-pro"
+            namespace="YvesCoding"
+            repo="magic-scroll"
           />
           {/* <GitHubButton
             key="github-button"
