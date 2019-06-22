@@ -101,7 +101,10 @@ export default function Template({
 
 export const pageQuery = graphql`
   query TemplateDocsMarkdown($slug: String!) {
-    allMdx(sort: { fields: fields___slug, order: DESC }) {
+    allMdx(
+      sort: { fields: fields___slug, order: DESC }
+      filter: { fields: { slug: { glob: "/docs/*" } } }
+    ) {
       edges {
         node {
           code {
