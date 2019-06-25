@@ -25,6 +25,20 @@ import Scrollbar from 'magic-scroll';
 
 3. Wrap the content and you will see the effect.
 
+js:
+
+```js
+<div className="demo-container">
+  <Scrollbar>
+    <div className="demo-content">
+      <span className="demo-content-text">Hello! Magic Scroll!</span>
+    </div>
+  </Scrollbar>
+</div>
+```
+
+less:
+
 ```less
 .demo-container {
   width: 100%;
@@ -45,16 +59,6 @@ import Scrollbar from 'magic-scroll';
   color: #2c3e50;
   font-weight: 300;
 }
-```
-
-```js
-<div className="demo-container">
-  <Scrollbar>
-    <div className="demo-content">
-      <span className="demo-content-text">Hello! Magic Scroll!</span>
-    </div>
-  </Scrollbar>
-</div>
 ```
 
 <Demo />

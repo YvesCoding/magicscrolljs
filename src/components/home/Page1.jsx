@@ -31,48 +31,6 @@ const featuresCN = [
     color: '#F5222D',
     shadowColor: 'rgba(245,34,45,.12)',
   },
-  {
-    title: '响应式',
-    content: '针对不同屏幕大小设计',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/BISfzKcCNCYFmTYcUygW.svg',
-    color: '#1AC44D',
-    shadowColor: 'rgba(26,196,77,.12)',
-  },
-  {
-    title: '主题',
-    content: '可配置的主题满足多样化的品牌诉求',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/XxqEexmShHOofjMYOCHi.svg',
-    color: '#FAAD14',
-    shadowColor: 'rgba(250,173,20,.12)',
-  },
-  {
-    title: '国际化',
-    content: '内建业界通用的国际化方案',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/JsixxWSViARJnQbAAPkI.svg',
-    color: '#722ED1',
-    shadowColor: 'rgba(114,46,209,.12)',
-  },
-  {
-    title: '最佳实践',
-    content: '良好的工程实践助你持续产出高质量代码',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/pbmKMSFpLurLALLNliUQ.svg',
-    color: '#FA8C16',
-    shadowColor: 'rgba(250,140,22,.12)',
-  },
-  {
-    title: 'Mock 数据',
-    content: '实用的本地数据调试方案',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/aLQyKyUyssIUhHTZqCIb.svg',
-    color: '#EB2F96',
-    shadowColor: 'rgba(235,45,150,.12)',
-  },
-  {
-    title: 'UI 测试',
-    content: '自动化测试保障前端产品质量',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/RpJIQitGbSCHwLMimybX.svg',
-    color: '#1890FF',
-    shadowColor: 'rgba(24,144,255,.12)',
-  },
 ];
 
 const featuresEN = [
@@ -96,48 +54,6 @@ const featuresEN = [
     src: 'https://gw.alipayobjects.com/zos/rmsportal/hBbIHzUsSbSxrhoRFYzi.svg',
     color: '#F5222D',
     shadowColor: 'rgba(245,34,45,.12)',
-  },
-  {
-    title: 'Responsive',
-    content: 'Designed for varies of screen size',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/BISfzKcCNCYFmTYcUygW.svg',
-    color: '#1AC44D',
-    shadowColor: 'rgba(26,196,77,.12)',
-  },
-  {
-    title: 'Theming',
-    content: 'Customizable theme with simple config',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/XxqEexmShHOofjMYOCHi.svg',
-    color: '#FAAD14',
-    shadowColor: 'rgba(250,173,20,.12)',
-  },
-  {
-    title: 'International',
-    content: 'Built-in i18n solution',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/JsixxWSViARJnQbAAPkI.svg',
-    color: '#722ED1',
-    shadowColor: 'rgba(114,46,209,.12)',
-  },
-  {
-    title: 'Best Practice',
-    content: 'Solid workflow make your code health',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/pbmKMSFpLurLALLNliUQ.svg',
-    color: '#FA8C16',
-    shadowColor: 'rgba(250,140,22,.12)',
-  },
-  {
-    title: 'Mock Data',
-    content: 'Easy to use mock development solution',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/aLQyKyUyssIUhHTZqCIb.svg',
-    color: '#EB2F96',
-    shadowColor: 'rgba(235,45,150,.12)',
-  },
-  {
-    title: 'UI Test',
-    content: 'Fly safely with unit test and e2e test',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/RpJIQitGbSCHwLMimybX.svg',
-    color: '#1890FF',
-    shadowColor: 'rgba(24,144,255,.12)',
   },
 ];
 
@@ -199,7 +115,7 @@ class Page1 extends React.PureComponent {
   render() {
     const { hoverNum } = this.state;
     const { intl, isMobile } = this.props;
-    let children = [[], [], []];
+    let children = [[]];
     (intl.locale === 'zh-CN' ? featuresCN : featuresEN).forEach((item, i) => {
       const isHover = hoverNum === i;
       const pointChild = [
@@ -229,29 +145,6 @@ class Page1 extends React.PureComponent {
             }}
             onMouseLeave={this.onMouseOut}
           >
-            <TweenOneGroup
-              className="page1-point-wrapper"
-              enter={this.getEnter}
-              leave={{
-                x: 0,
-                y: 30,
-                opacity: 0,
-                duration: 300,
-                ease: 'easeInBack',
-              }}
-              resetStyle={false}
-              exclusive
-            >
-              {(isMobile || isHover) && pointChild}
-            </TweenOneGroup>
-            <div
-              className="page1-image"
-              style={{
-                boxShadow: `${isHover ? '0 12px 24px' : '0 6px 12px'} ${item.shadowColor}`,
-              }}
-            >
-              <img src={item.src} alt="img" style={i === 4 ? { marginLeft: -15 } : {}} />
-            </div>
             <h3>{item.title}</h3>
             <p>{item.content}</p>
           </div>
@@ -275,26 +168,13 @@ class Page1 extends React.PureComponent {
     return (
       <div className="home-page page1">
         <div className="home-page-wrapper" id="page1-wrapper">
-          {!isMobile && (
-            <Parallax
-              className="page1-bg"
-              animation={{
-                translateY: 200,
-                ease: 'linear',
-                playScale: [0, 1.65],
-              }}
-              location="page1-wrapper"
-            >
-              Feature
-            </Parallax>
-          )}
           <h2>
-            What can <span>Pro</span> do for you{' '}
+            <span>Features</span>
           </h2>
           <div className="title-line-wrapper page1-line">
             <div className="title-line" />
           </div>
-          <OverPack>{children}</OverPack>
+          <OverPack targetId="layout-panel">{children}</OverPack>
         </div>
       </div>
     );

@@ -36,7 +36,7 @@ export function isZhCN(pathname: string) {
 export function getLocalizedPathname(path: string, zhCN: boolean) {
   let pathname = path.startsWith('/') ? path : `/${path}`;
   pathname = pathname.replace('-cn', '');
-  if (pathname === '/' || pathname === '/index') {
+  if (pathname === '/' || pathname === '/index' || pathname === '/index/') {
     if (zhCN) {
       return '/index-cn';
     }

@@ -12,7 +12,7 @@ function Home(props) {
     <DocumentTitle title="Magic Scroll">
       <div className="home-wrapper">
         <Banner {...props} />
-        {/* <Page1 {...props} /> */}
+        <Page1 {...props} />
         <Page2 {...props} />
       </div>
     </DocumentTitle>
