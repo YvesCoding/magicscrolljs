@@ -6,13 +6,37 @@ import { FormattedMessage } from 'react-intl';
 import * as utils from '../utils';
 import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 
+function getNode(slug, allMdx) {
+  const slugCN = slug + '-cn';
+
+  const rtn = {
+    zh: {},
+    en: {},
+  };
+
+  rtn.en = allMdx.nodes.find(n => {
+    return slug == n.fields.slug;
+  });
+
+  rtn.zh = allMdx.nodes.find(n => {
+    return slugCN == n.fields.slug;
+  });
+
+  return rtn;
+}
+
 function Page2(props) {
   let {
     location,
     data: { allMdx },
   } = props;
   const isZhCN = utils.isZhCN(location.pathname);
-  console.log(props);
+  const mdxNode = getNode('/snippets/home-intro', allMdx);
+  const finalNode = isZhCN ? mdxNode.zh : mdxNode.en;
+  const wrapper = props => {
+    return <div className="markdown home-markdown">{props.children}</div>;
+  };
+
   return (
     <div className="home-page page2">
       <div className="home-page-wrapper">
@@ -24,9 +48,9 @@ function Page2(props) {
         </h2>
         <OverPack always={true} targetId="layout-panel">
           <QueueAnim key="queue" type="bottom" leaveReverse className="page2-content">
-            {allMdx.nodes.map((content, index) => (
-              <MDXRenderer key={index}>{content.code.body}</MDXRenderer>
-            ))}
+            <MDXRenderer components={{ wrapper }} key="render">
+              {finalNode.code.body}
+            </MDXRenderer>
           </QueueAnim>
         </OverPack>
       </div>

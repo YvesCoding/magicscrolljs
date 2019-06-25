@@ -20,7 +20,7 @@ export default IndexPage;
 
 export const pageQuery = graphql`
   query queryAllSnippets {
-    allMdx(filter: { fields: { slug: { glob: "snippet-*" } } }) {
+    allMdx(filter: { fields: { slug: { glob: "/snippets/*" } } }) {
       nodes {
         fields {
           slug

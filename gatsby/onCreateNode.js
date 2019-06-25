@@ -33,24 +33,22 @@ const himalaya = require('himalaya');
 //   return data;
 // };
 
-const getKebabCase = (str, sourceInstanceName) => {
-  return /^\/snippets/.test(sourceInstanceName)
-    ? str
-    : str
-        .replace(/[A-Z]/g, letter => {
-          return `-${letter.toLowerCase()}`;
-        })
-        .replace(/\/-/g, '/');
+const getKebabCase = str => {
+  return str
+    .replace(/[A-Z]/g, letter => {
+      return `-${letter.toLowerCase()}`;
+    })
+    .replace(/\/-/g, '/');
 };
 // Add custom fields to MarkdownRemark nodes.
 module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
   switch (node.internal.type) {
     case 'Mdx':
-      const { permalink, slug: mdxSlug } = node.frontmatter;
+      const { permalink } = node.frontmatter;
       const { relativePath, sourceInstanceName } = getNode(node.parent);
 
-      let slug = permalink || mdxSlug;
+      let slug = permalink;
       const filePath = path.join(__dirname, '../', sourceInstanceName, relativePath);
       const stats = fs.statSync(filePath);
       const mtime = new Date(stats.mtime).getTime();
@@ -71,7 +69,7 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
       createNodeField({
         node,
         name: 'slug',
-        value: getKebabCase(slug.replace('/index', ''), sourceInstanceName),
+        value: getKebabCase(slug.replace('/index', '')),
       });
       createNodeField({
         node,
