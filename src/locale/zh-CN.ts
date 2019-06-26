@@ -27,7 +27,7 @@ export default {
     'app.demo.codesandbox': '在 CodeSandbox 中打开',
     'app.home.slogan': '一款基于React.js的自定义滚动条插件',
     'app.home.preview': '预览',
-    'app.home.start': '开始使用',
+    'app.home.start': '快速开始',
     'app.home.download': '下载',
     'app.home.letspro': '命令行运行下列命令，快速启动开发服务：',
     'app.home.selectpro': '选择 Ant Design Pro',

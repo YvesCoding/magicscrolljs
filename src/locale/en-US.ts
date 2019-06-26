@@ -27,7 +27,7 @@ export default {
     'app.demo.codesandbox': 'Open in CodeSandbox',
     'app.home.slogan': 'A customize scrollbar plugin based on React.js',
     'app.home.preview': 'Preview',
-    'app.home.start': 'Getting Started',
+    'app.home.start': 'Quick Start',
     'app.home.download': 'Download',
     'app.home.letspro': 'Run commands below, explore it!',
     'app.home.selectpro': 'Select Ant Design Pro',
