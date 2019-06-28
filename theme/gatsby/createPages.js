@@ -77,6 +77,11 @@ module.exports = async ({ graphql, actions }) => {
     component: indexTemplate,
   });
 
+  createPage({
+    path: '/',
+    component: indexTemplate,
+  });
+
   createRedirect({
     fromPath: '/docs/',
     redirectInBrowser: true,

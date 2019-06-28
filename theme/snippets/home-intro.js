@@ -1,5 +1,6 @@
 import Scrollbar from 'magic-scroll';
 import './home-intro.less';
+import React from 'react';
 
 export default () => {
   return (
