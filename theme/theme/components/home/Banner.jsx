@@ -12,17 +12,6 @@ function Banner(props) {
   const { isMobile, location } = props;
   return (
     <div className="banner-wrapper">
-      {/* {isMobile && (
-        <TweenOne animation={{ opacity: 1 }} className="banner-image-wrapper">
-          <div className="home-banner-image">
-            <img
-              alt="banner"
-              src="https://gw.alipayobjects.com/zos/rmsportal/rqKQOpnMxeJKngVvulsF.svg"
-              width="100%"
-            />
-          </div>
-        </TweenOne>
-      )} */}
       <QueueAnim className="banner-title-wrapper" type={isMobile ? 'bottom' : 'right'}>
         <div key="line" className="title-line-wrapper">
           <div className="title-line" style={{ transform: 'translateX(-64px)' }} />

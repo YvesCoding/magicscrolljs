@@ -27,7 +27,6 @@ _scaffold_site
 .si.yml
 _data
 dist
-/lib
 /es
 elasticsearch-*
 config/base.yaml

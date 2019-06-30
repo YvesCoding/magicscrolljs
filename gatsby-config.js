@@ -5,5 +5,6 @@ function getPlugin(pluginName) {
 }
 
 module.exports = {
-  __experimentalThemes: [`${__dirname}\\theme`],
+  __experimentalThemes: [`${__dirname}/theme`],
+  // __experimentalThemes: [`gatsby-theme-ant-docs`],
 };

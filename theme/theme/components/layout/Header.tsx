@@ -75,10 +75,6 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     });
     initDocSearch(intl.locale);
 
-    if (localStorage.getItem(key) !== 'true' && Date.now() < new Date('2018/9/5').getTime()) {
-      this.infoNewVersion();
-    }
-
     const {
       intl: { locale },
     } = this.props;
@@ -116,43 +112,6 @@ class Header extends React.Component<HeaderProps, HeaderState> {
 
   handleSelect = (value: string) => {
     window.location.href = value;
-  };
-
-  infoNewVersion = () => {
-    const {
-      intl: { formatMessage },
-    } = this.props;
-    Modal.info({
-      title: formatMessage({ id: 'app.publish.title' }),
-      content: (
-        <div>
-          <img
-            src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-            alt="Ant Design"
-          />
-          <p>
-            {formatMessage({ id: 'app.publish.greeting' })}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={formatMessage({ id: 'app.publish.url' })}
-            >
-              Ant Desgin Pro {formatMessage({ id: 'app.publish.intro' })}
-            </a>
-            {formatMessage({ id: 'app.publish.tips' })}
-            {formatMessage({ id: 'app.publish.old-version-guide' })}
-            <a target="_blank" rel="noopener noreferrer" href="https://v1.pro.ant.design">
-              v1.pro.ant.design
-            </a>
-            {formatMessage({ id: 'app.publish.old-version-tips' })}
-          </p>
-        </div>
-      ),
-      okText: 'OK',
-      onOk: () => localStorage.setItem(key, 'true'),
-      className: 'new-version-info-modal',
-      width: 470,
-    });
   };
 
   handleLangChange = () => {
@@ -254,7 +213,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
           </Col>
           <Col xxl={20} xl={19} lg={16} md={16} sm={0} xs={0}>
             <div id="search-box">
-              <Icon type="search" />
+              <Icon type="search" className="search-icon" />
               <Input
                 ref={ref => {
                   this.searchInput = ref;

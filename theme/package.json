@@ -1,30 +1,21 @@
 {
-  "name": "ant-design-pro-site",
-  "version": "2.3.0",
-  "description": "site of Ant Design Pro",
-  "homepage": "http://pro.ant.design/",
+  "name": "gatsby-theme-ant-docs",
+  "version": "0.0.4",
+  "description": "Ant docs theme of gatsby",
+  "homepage": "https://github.com/YvesCoding/gatsby-theme-ant-docs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ant-design/ant-design-pro-site"
+    "url": "https://github.com/YvesCoding/gatsby-theme-ant-docs"
+  },
+  "author": {
+    "name": "Yves Wang"
   },
   "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "dev": "rm -rf .cache && gatsby develop",
-    "gh-pages": "cp  CNAME ./public/ && gh-pages -d public",
-    "lint": "npm run lint:es && npm run lint:style",
-    "lint:es": "eslint ./ --ext '.js,.jsx'",
-    "lint:style": "stylelint \"site/**/*.less\" --syntax less",
-    "prettier": "prettier --write ./site/**/**/**",
-    "serve": "gatsby serve",
-    "site": "cross-env NODE_OPTIONS=--max-old-space-size=4096 npm run build && npm run gh-pages",
-    "start": "gatsby develop"
-  },
+  "scripts": {},
   "dependencies": {
     "@types/classnames": "^2.2.7",
     "@types/react-document-title": "^2.0.3",
     "@types/react-intl": "^2.3.17",
-    "antd": "latest",
     "axios": "^0.18.0",
     "bizcharts": "^3.2.2",
     "bizcharts-plugin-slider": "^2.0.4",
@@ -35,16 +26,13 @@
     "himalaya": "^1.1.0",
     "lodash-decorators": "^6.0.0",
     "lz-string": "^1.4.4",
-    "magic-scroll": "0.0.6",
     "node-fetch": "^2.5.0",
     "react-copy-to-clipboard": "^5.0.0",
     "react-document-title": "^2.0.3",
     "react-github-button": "^0.1.11",
     "react-intl": "^2.4.0",
     "react-live": "^2.1.2",
-    "react-media": "^1.9.2"
-  },
-  "devDependencies": {
+    "react-media": "^1.9.2",
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/generator": "^7.0.0",
@@ -58,19 +46,7 @@
     "commander": "~2.17.0",
     "concurrently": "^3.5.0",
     "cross-env": "^5.1.1",
-    "eslint": "^5.3.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-loader": "^2.1.0",
-    "eslint-plugin-babel": "^5.0.0",
-    "eslint-plugin-compat": "^2.1.0",
-    "eslint-plugin-import": "^2.10.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-markdown": "^1.0.0-beta.6",
-    "eslint-plugin-react": "^7.0.1",
-    "eslint-tinker": "^0.5.0",
     "fs-extra": "^7.0.0",
-    "gatsby": "^2.2.7",
     "gatsby-mdx": "^0.6.3",
     "gatsby-plugin-antd": "^2.0.2",
     "gatsby-plugin-catch-links": "^2.0.0",
@@ -101,13 +77,30 @@
     "rc-queue-anim": "^1.3.1",
     "rc-scroll-anim": "^2.0.2",
     "rc-tween-one": "^2.2.3",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
     "shelljs": "^0.8.2",
     "style-loader": "^0.21.0",
     "stylelint": "^9.4.0",
     "stylelint-config-prettier": "^3.3.0",
     "stylelint-config-standard": "^18.2.0"
   },
-  "title": "Ant Design Pro"
+  "peerDependencies": {
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "gatsby": "^2.2.7",
+    "antd": "latest",
+    "magic-scroll": "0.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-babel": "^5.0.0",
+    "eslint-plugin-compat": "^2.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-markdown": "^1.0.0-beta.6",
+    "eslint-plugin-react": "^7.0.1",
+    "eslint-tinker": "^0.5.0"
+  }
 }
