@@ -4,10 +4,6 @@ title: 开始使用
 type: 快速上手
 ---
 
-import Test from './test';
-
-<Test/>
-
 ## 简介
 
 **One** 这个项目是一个开源的前后端分离项目，它的前身是著名的开源项目[Guns](https://gitee.com/stylefeng/guns)

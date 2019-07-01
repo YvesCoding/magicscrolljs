@@ -49,7 +49,7 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
       const { relativePath, sourceInstanceName } = getNode(node.parent);
 
       let slug = permalink;
-      const filePath = path.join(__dirname, '../', sourceInstanceName, relativePath);
+      const filePath = path.join(process.cwd(), sourceInstanceName, relativePath);
       const stats = fs.statSync(filePath);
       const mtime = new Date(stats.mtime).getTime();
       const mdFilePath = path.join(sourceInstanceName, relativePath);

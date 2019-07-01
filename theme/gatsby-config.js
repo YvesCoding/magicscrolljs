@@ -1,7 +1,8 @@
 var path = require('path');
+var finalConfig = require('./lib/util').getFinalConfig();
 
 function getPlugin(pluginName) {
-  return path.resolve(__dirname, `./plugins/${pluginName}/index.js`);
+  return path.resolve(__dirname, `./lib/plugins/${pluginName}/index.js`);
 }
 
 module.exports = {
@@ -53,28 +54,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'images',
-        path: `${__dirname}/src/images`,
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
         name: '/docs',
-        path: `${__dirname}/docs/`,
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: '/snippets',
-        path: `${__dirname}/snippets/`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: 'UA-72788897-5',
+        path: path.resolve(finalConfig.themeConfig.docsDir),
       },
     },
     `gatsby-plugin-netlify`,

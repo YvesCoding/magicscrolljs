@@ -5,7 +5,7 @@ module.exports.getUserConfig = () => {
   var conifgFile;
   var config = {};
   try {
-    conifgFile = require(path.resolve(process.cwd(), 'ant-docs.config.js'));
+    conifgFile = require(path.resolve('ant-docs.config.js'));
     config = require(conifgFile);
   } catch (error) {}
 
