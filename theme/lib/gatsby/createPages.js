@@ -8,6 +8,12 @@
 const { resolve } = require('path');
 var { themeConfig } = require('../util').getFinalConfig();
 
+function isHome(path) {
+  if (path == '/') return true;
+
+  return themeConfig.locales && Object.keys(themeConfig.locales).indexOf(path) != -1;
+}
+
 module.exports = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions;
   // Used to detect and prevent duplicate redirects
@@ -50,7 +56,7 @@ module.exports = async ({ graphql, actions }) => {
   const edges = allMdx.data.allMdx.edges;
   edges.forEach(edge => {
     const { slug, underScoreCasePath } = edge.node.fields;
-    if (slug.includes('docs/') || slug.includes('/blog')) {
+    if (!isHome(slug)) {
       const template = docsTemplate;
       const createArticlePage = path => {
         if (underScoreCasePath !== path) {
@@ -70,31 +76,17 @@ module.exports = async ({ graphql, actions }) => {
 
       // Register primary URL.
       createArticlePage(slug.replace('/index', ''));
+    } else {
+      createPage({
+        path: slug,
+        component: indexTemplate,
+        context: {
+          slug,
+        },
+      });
     }
   });
-  // 首页的中文版
 
-  createPage({
-    path: '/index-cn',
-    component: indexTemplate,
-  });
-
-  createPage({
-    path: '/',
-    component: indexTemplate,
-  });
-
-  createRedirect({
-    fromPath: '/docs/',
-    redirectInBrowser: true,
-    toPath: '/docs/getting-started-cn',
-  });
-
-  createRedirect({
-    fromPath: '/blog/',
-    redirectInBrowser: true,
-    toPath: '/blog/change-theme-cn',
-  });
   Object.keys(redirects).map(path =>
     createRedirect({
       fromPath: path,

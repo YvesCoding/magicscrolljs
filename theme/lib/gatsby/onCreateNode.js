@@ -62,6 +62,9 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
       });
 
       slug = `${relativePath.replace(/(readme)?\.mdx?/i, '')}`;
+      if (!slug.startsWith('/')) {
+        slug = '/' + slug;
+      }
 
       createNodeField({
         node,

@@ -16,7 +16,7 @@ module.exports = {
     {
       resolve: 'gatsby-mdx',
       options: {
-        extensions: ['.md', '.mdx'],
+        extensions: ['.md', '.mdx', '.MD'],
         globalScope: `
         import Scrollbar from "magic-scroll";
 
