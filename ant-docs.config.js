@@ -18,7 +18,7 @@ module.exports = {
           },
         ],
         sidebar: {
-          '/guide/': genSidebarConfig(),
+          '/guide/': genSidebarConfig('Guide'),
         },
       },
       '/zh': {
@@ -33,9 +33,12 @@ module.exports = {
           },
         ],
         sidebar: {
-          '/guide/': genSidebarConfig('Guide'),
+          '/guide/': genSidebarConfig('指南'),
         },
       },
     },
   },
 };
+function genSidebarConfig(title) {
+  return [{ title, collapsable: false, children: ['', 'getting-started'] }];
+}

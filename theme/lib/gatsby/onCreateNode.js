@@ -6,32 +6,35 @@ const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
 const himalaya = require('himalaya');
+var { themeConfig } = require('../util').getFinalConfig();
 
 // // 获取用户的头像列表
-// const getAvatarList = async filename => {
-//   const sourcePath = 'https://github.com/wangyi7099/one-front-docs/contributors/master';
-//   const url = `${sourcePath}${filename}/list`;
-//   const html = await fetch(url).then(res => res.text());
-//   const ast = himalaya.parse(html)[0].children || [];
-//   const data = ast
-//     .map(item => {
-//       if (item.type === 'element') {
-//         const AlinkAST = item.children[1];
-//         const href = AlinkAST.attributes.find(({ key }) => key === 'href').value;
-//         const img = AlinkAST.children[1];
-//         const text = AlinkAST.children[2].content;
-//         const src = img.attributes.find(({ key }) => key === 'src').value;
-//         return {
-//           href,
-//           text,
-//           src,
-//         };
-//       }
-//       return null;
-//     })
-//     .filter(item => item && item.src);
-//   return data;
-// };
+const getAvatarList = async filename => {
+  const sourcePath = `https://github.com/${themeConfig.docsRepo || themeConfig.repo}/contributors/${
+    themeConfig.docsBranch
+  }`;
+  const url = `${sourcePath}${filename}/list`;
+  const html = await fetch(url).then(res => res.text());
+  const ast = himalaya.parse(html)[0].children || [];
+  const data = ast
+    .map(item => {
+      if (item.type === 'element') {
+        const AlinkAST = item.children[1];
+        const href = AlinkAST.attributes.find(({ key }) => key === 'href').value;
+        const img = AlinkAST.children[1];
+        const text = AlinkAST.children[2].content;
+        const src = img.attributes.find(({ key }) => key === 'src').value;
+        return {
+          href,
+          text,
+          src,
+        };
+      }
+      return null;
+    })
+    .filter(item => item && item.src);
+  return data;
+};
 
 const getKebabCase = str => {
   return str
@@ -45,11 +48,10 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
   switch (node.internal.type) {
     case 'Mdx':
-      const { permalink } = node.frontmatter;
       const { relativePath, sourceInstanceName } = getNode(node.parent);
 
-      let slug = permalink;
-      const filePath = path.join(process.cwd(), sourceInstanceName, relativePath);
+      let slug;
+      const filePath = node.fileAbsolutePath; // path.join(process.cwd(), sourceInstanceName, relativePath);
       const stats = fs.statSync(filePath);
       const mtime = new Date(stats.mtime).getTime();
       const mdFilePath = path.join(sourceInstanceName, relativePath);
@@ -59,12 +61,7 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
         value: mtime,
       });
 
-      if (!slug) {
-        slug = `${sourceInstanceName}/${relativePath
-          .replace('.en-US.md', '')
-          .replace('.zh-CN.md', '-cn')
-          .replace('.md', '')}`;
-      }
+      slug = `${relativePath.replace(/(readme)?\.mdx?/i, '')}`;
 
       createNodeField({
         node,
@@ -82,11 +79,11 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
         name: 'path',
         value: mdFilePath,
       });
-      // const html = await getAvatarList(mdFilePath);
+      const html = await getAvatarList(mdFilePath);
       createNodeField({
         node,
         name: 'avatarList',
-        value: null,
+        value: html,
       });
   }
 };

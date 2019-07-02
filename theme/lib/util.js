@@ -2,12 +2,12 @@ var path = require('path');
 var defaultConfig = require(path.resolve(__dirname, './default-config'));
 
 module.exports.getUserConfig = () => {
-  var conifgFile;
   var config = {};
   try {
-    conifgFile = require(path.resolve('ant-docs.config.js'));
-    config = require(conifgFile);
-  } catch (error) {}
+    config = require(path.resolve('ant-docs.config.js'));
+  } catch (error) {
+    throw error;
+  }
 
   return config;
 };
