@@ -6,12 +6,15 @@
  */
 
 const { resolve } = require('path');
+var { themeConfig } = require('../util').getFinalConfig();
 
 module.exports = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions;
   // Used to detect and prevent duplicate redirects
 
   const docsTemplate = resolve(__dirname, '../src/templates/docs.tsx');
+  const indexTemplate = resolve(__dirname, '../src/pages/index.tsx');
+
   // Redirect /index.html to root.
   createRedirect({
     fromPath: '/index.html',
@@ -70,7 +73,6 @@ module.exports = async ({ graphql, actions }) => {
     }
   });
   // 首页的中文版
-  const indexTemplate = resolve(__dirname, '../src/pages/index.tsx');
 
   createPage({
     path: '/index-cn',

@@ -66,12 +66,12 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
       createNodeField({
         node,
         name: 'slug',
-        value: getKebabCase(slug.replace('/index', '')),
+        value: getKebabCase(slug),
       });
       createNodeField({
         node,
         name: 'underScoreCasePath',
-        value: slug.replace('/index', ''),
+        value: slug,
       });
 
       createNodeField({

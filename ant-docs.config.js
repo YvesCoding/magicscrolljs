@@ -4,7 +4,7 @@ module.exports = {
     repo: 'YvesCoding/magic-scroll',
     docsRepo: 'yvesCoding/magicscrolljs',
     docsDir: 'docs',
-    docsBranch: 'master',
+    docsBranch: 'temp',
     locales: {
       '/': {
         label: 'English',
