@@ -4,7 +4,6 @@ import React from 'react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
 
 const featuresCN = [
   {
@@ -93,4 +92,4 @@ class Page1 extends React.PureComponent {
   }
 }
 
-export default injectIntl(Page1);
+export default Page1;

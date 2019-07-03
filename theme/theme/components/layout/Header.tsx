@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import { Link } from 'gatsby';
 import * as utils from '../utils';
 import { Row, Col, Icon, Select, Input, Menu, Button, Modal, Popover } from 'antd';
@@ -43,7 +42,6 @@ function initDocSearch(locale: 'zh-CN' | 'en-US') {
 
 interface HeaderProps {
   isMobile: boolean;
-  intl: any;
   location: {
     pathname: string;
   };
@@ -67,18 +65,11 @@ class Header extends React.Component<HeaderProps, HeaderState> {
 
   componentDidMount() {
     const { searchInput } = this;
-    const { intl } = this.props;
     document.addEventListener('keyup', event => {
       if (event.keyCode === 83 && event.target === document.body) {
         searchInput && searchInput.focus();
       }
     });
-    initDocSearch(intl.locale);
-
-    const {
-      intl: { locale },
-    } = this.props;
-    initDocSearch(locale);
   }
 
   setMenuMode = (isMobile: boolean) => {
@@ -114,23 +105,6 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     window.location.href = value;
   };
 
-  handleLangChange = () => {
-    const {
-      location: { pathname },
-    } = this.props;
-    const currentProtocol = `${window.location.protocol}//`;
-    const currentHref = window.location.href.substr(currentProtocol.length);
-
-    if (utils.isLocalStorageNameSupported()) {
-      localStorage.setItem('locale', utils.isZhCN(pathname) ? 'en-US' : 'zh-CN');
-    }
-    window.location.href =
-      currentProtocol +
-      currentHref.replace(
-        window.location.pathname,
-        utils.getLocalizedPathname(pathname, !utils.isZhCN(pathname))
-      );
-  };
   onVersionChange = (value: string) => {
     if (value === 'v1') {
       window.open('https://v1.pro.ant.design/');
@@ -141,7 +115,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   };
   render() {
     const { menuMode, menuVisible } = this.state;
-    const { location, intl } = this.props;
+    const { location } = this.props;
     const path = location.pathname;
 
     const module = location.pathname
@@ -158,30 +132,14 @@ class Header extends React.Component<HeaderProps, HeaderState> {
       activeMenuItem = 'home';
     }
 
-    const isZhCN = intl.locale === 'zh-CN';
-
     const menu = [
       <Menu mode={menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
         <Menu.Item key="home">
-          <Link to={utils.getLocalizedPathname('/', isZhCN)}>
-            <FormattedMessage id="app.header.menu.home" />
-          </Link>
+          {/* <Link to={utils.getLocalizedPathname('/' )}>首页</Link> */}
         </Menu.Item>
         <Menu.Item key="docs">
-          <Link to={utils.getLocalizedPathname('/docs/getting-started', isZhCN)}>
-            <FormattedMessage id="app.header.menu.docs" />
-          </Link>
+          {/* <Link to={utils.getLocalizedPathname('/docs/getting-started', isZhCN)}>文档</Link> */}
         </Menu.Item>
-        {/* <Menu.Item key="blog">
-          <Link to={utils.getLocalizedPathname('/blog/change-theme', isZhCN)}>Blog</Link>
-        </Menu.Item> */}
-        {/* {menuMode === 'inline' && (
-          <Menu.Item key="preview">
-            <a target="_blank" href="http://preview.pro.ant.design/" rel="noopener noreferrer">
-              <FormattedMessage id="app.home.preview" />
-            </a>
-          </Menu.Item>
-        )} */}
       </Menu>,
     ];
 
@@ -218,33 +176,13 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                 ref={ref => {
                   this.searchInput = ref;
                 }}
-                placeholder={intl.formatMessage({ id: 'app.header.search' })}
               />
             </div>
             <div className="header-meta">
               <div className="right-header">
                 <div id="lang">
-                  <Button onClick={this.handleLangChange} size="small">
-                    <FormattedMessage id="app.header.lang" />
-                  </Button>
+                  <Button size="small">语言</Button>
                 </div>
-                {/* <div id="preview">
-                  <a
-                    id="preview-button"
-                    target="_blank"
-                    href="http://preview.pro.ant.design"
-                    rel="noopener noreferrer"
-                  >
-                    <Button icon="eye-o" size="small">
-                      <FormattedMessage id="app.home.preview" />
-                    </Button>
-                  </a>
-                </div> */}
-                {/* <Select size="small" onChange={this.onVersionChange} value="stable">
-                  <Option value="v1">v1</Option>
-                  <Option value="v2">v2</Option>
-                  <Option value="stable">v4</Option>
-                </Select> */}
               </div>
               {menuMode === 'horizontal' ? <div id="menu">{menu}</div> : null}
             </div>
@@ -255,4 +193,4 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   }
 }
 
-export default injectIntl(Header);
+export default Header;

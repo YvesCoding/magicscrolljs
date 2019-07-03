@@ -19,16 +19,20 @@ const IndexPage = props => {
 export default IndexPage;
 
 export const pageQuery = graphql`
-  query queryAllSnippets {
-    allMdx(filter: { fields: { slug: { glob: "/snippets/*" } } }) {
-      nodes {
-        fields {
-          slug
-          path
+  query queryHomeInfo($slug: String!) {
+    mdx(fields: { slug: { eq: $slug } }) {
+      frontmatter {
+        title
+        heroImage
+        actionText
+        actionLink
+        features {
+          details
+          title
         }
-        code {
-          body
-        }
+      }
+      code {
+        body
       }
     }
   }

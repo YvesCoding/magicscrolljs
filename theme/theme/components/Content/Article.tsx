@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import DocumentTitle from 'react-document-title';
 import { Affix } from 'antd';
 import delegate from 'delegate';
@@ -81,7 +80,7 @@ export default class Article extends React.PureComponent<ArticleProps> {
               {!subtitle || locale === 'en-US' ? null : (
                 <span className="subtitle">{subtitle}</span>
               )}
-              <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={path} />
+              <EditButton title="编辑文件" filename={path} />
             </h1>
 
             {!content.toc.items.length ? null : (
@@ -111,7 +110,7 @@ export default class Article extends React.PureComponent<ArticleProps> {
           </article>
           <div className="modifiedTime">
             {/* <AvatarList avatarList={avatarList} /> */}
-            <FormattedMessage id="app.content.modifiedTime" />
+            上次修改时间
             {moment(modifiedTime).format('YYYY-MM-DD HH:mm:SS')}
           </div>
         </>

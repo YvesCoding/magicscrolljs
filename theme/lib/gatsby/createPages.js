@@ -6,8 +6,8 @@
  */
 
 const { resolve } = require('path');
-var { themeConfig } = require('../util').getFinalConfig();
-
+var webConfig = require('../util').getFinalConfig();
+var { themeConfig } = webConfig;
 function isHome(path) {
   if (path == '/') return true;
 
@@ -18,8 +18,8 @@ module.exports = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions;
   // Used to detect and prevent duplicate redirects
 
-  const docsTemplate = resolve(__dirname, '../src/templates/docs.tsx');
-  const indexTemplate = resolve(__dirname, '../src/pages/index.tsx');
+  const docsTemplate = resolve(__dirname, '../../theme/templates/docs.tsx');
+  const indexTemplate = resolve(__dirname, '../../theme/pages/index.tsx');
 
   // Redirect /index.html to root.
   createRedirect({
@@ -67,6 +67,7 @@ module.exports = async ({ graphql, actions }) => {
           path,
           component: template,
           context: {
+            webConfig,
             slug,
             // if is docs page
             type: slug.includes('docs/') ? '/docs/' : '/blog/',
@@ -75,12 +76,13 @@ module.exports = async ({ graphql, actions }) => {
       };
 
       // Register primary URL.
-      createArticlePage(slug.replace('/index', ''));
+      createArticlePage(slug);
     } else {
       createPage({
         path: slug,
         component: indexTemplate,
         context: {
+          webConfig,
           slug,
         },
       });

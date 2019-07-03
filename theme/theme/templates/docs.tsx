@@ -16,7 +16,6 @@ interface IMarkDownFields {
 export interface IFrontmatterData extends IMarkDownFields {
   title: string;
   order: number;
-  type: string;
   filename: string;
   subtitle: string;
   path: string;
@@ -112,8 +111,6 @@ export const pageQuery = graphql`
           }
           frontmatter {
             title
-            type
-            order
           }
           fields {
             slug
@@ -125,9 +122,7 @@ export const pageQuery = graphql`
     mdx(fields: { slug: { eq: $slug } }) {
       tableOfContents
       frontmatter {
-        order
         title
-        type
       }
       fields {
         modifiedTime

@@ -15,7 +15,6 @@
   "dependencies": {
     "@types/classnames": "^2.2.7",
     "@types/react-document-title": "^2.0.3",
-    "@types/react-intl": "^2.3.17",
     "axios": "^0.18.0",
     "bizcharts": "^3.2.2",
     "bizcharts-plugin-slider": "^2.0.4",
@@ -30,8 +29,7 @@
     "react-copy-to-clipboard": "^5.0.0",
     "react-document-title": "^2.0.3",
     "react-github-button": "^0.1.11",
-    "react-intl": "^2.4.0",
-    "react-live": "^2.1.2",
+     "react-live": "^2.1.2",
     "react-media": "^1.9.2",
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",

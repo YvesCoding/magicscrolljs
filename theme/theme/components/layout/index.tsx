@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { addLocaleData, IntlProvider } from 'react-intl';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import Media from 'react-media';
-import enLocale from '../../locale/en-US';
-import cnLocale from '../../locale/zh-CN';
 import * as utils from '../utils';
 import '../../static/style';
 import Header from './Header';
@@ -24,10 +21,6 @@ interface LayoutProps {
 }
 
 interface LayoutState {
-  appLocale: {
-    locale: any;
-    messages: any;
-  };
   pageHeight: number;
   contentHeight: number;
 }
@@ -36,10 +29,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   constructor(props: LayoutProps) {
     super(props);
     const { pathname } = props.location;
-    const appLocale = utils.isZhCN(pathname) ? cnLocale : enLocale;
-    addLocaleData(appLocale.data);
     this.state = {
-      appLocale,
       pageHeight: 0,
       contentHeight: 0,
     };
@@ -48,36 +38,34 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   render() {
     const { children, location, ...restProps } = this.props;
     const { pathname } = location;
-    const { appLocale, pageHeight, contentHeight } = this.state;
+    const { pageHeight, contentHeight } = this.state;
     return (
-      <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
-        <LocaleProvider locale={enUS}>
-          <div
-            className={`page-wrapper ${(pathname === '/' || pathname === 'index-cn') &&
-              'index-page-wrapper'}`}
+      <LocaleProvider locale={enUS}>
+        <div
+          className={`page-wrapper ${(pathname === '/' || pathname === 'index-cn') &&
+            'index-page-wrapper'}`}
+        >
+          <Scrollbar
+            scrollingX={false}
+            style={{ height: pageHeight + 'px' }}
+            barBg="#1890ff"
+            railCls="page-rail"
+            ref="scrollbar"
+            renderPanel={this.renderPanel}
           >
-            <Scrollbar
-              scrollingX={false}
-              style={{ height: pageHeight + 'px' }}
-              barBg="#1890ff"
-              railCls="page-rail"
-              ref="scrollbar"
-              renderPanel={this.renderPanel}
-            >
-              <Header {...restProps} location={location} ref="header" />
-              <div style={{ minHeight: contentHeight + 'px' }}>
-                <contentContext.Provider value={contentHeight}>
-                  {React.cloneElement(children, {
-                    ...children.props,
-                    isMobile: restProps.isMobile,
-                  })}
-                </contentContext.Provider>
-              </div>
-              <Footer {...restProps} location={location} ref="footer" />
-            </Scrollbar>
-          </div>
-        </LocaleProvider>
-      </IntlProvider>
+            <Header {...restProps} location={location} ref="header" />
+            <div style={{ minHeight: contentHeight + 'px' }}>
+              <contentContext.Provider value={contentHeight}>
+                {React.cloneElement(children, {
+                  ...children.props,
+                  isMobile: restProps.isMobile,
+                })}
+              </contentContext.Provider>
+            </div>
+            <Footer {...restProps} location={location} ref="footer" />
+          </Scrollbar>
+        </div>
+      </LocaleProvider>
     );
   }
 

@@ -1,5 +1,16 @@
 module.exports = {
   base: '/',
+  locales: {
+    '/': {
+      title: 'Vuescroll.js',
+      description:
+        'Vuescroll - A customizable scrollbar plugin based on vue.js for PC and mobile phone',
+    },
+    '/zh/': {
+      title: 'Vuescroll.js',
+      description: 'Vuescroll - 一个自定义滚动条的插件适用于PC和移动端',
+    },
+  },
   themeConfig: {
     repo: 'YvesCoding/magic-scroll',
     docsRepo: 'yvesCoding/magicscrolljs',
