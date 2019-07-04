@@ -88,9 +88,11 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     let currentLocates = utils.getCurrentLoacle(localtes, slug);
     let { themeConfig, title } = utils.getCurrentWebConfigBySlug(webConfig, slug);
     const { nav = [] } = themeConfig;
-    const activeMenuItem = nav.filter((item: any) => {
-      return item.link && item.link.startsWith(slug);
-    });
+    const activeMenuItem = nav
+      .filter((item: any) => {
+        return item.link && item.link.startsWith(slug);
+      })
+      .map((_: string) => _.link);
 
     const menu = [
       <Menu mode={menuMode} selectedKeys={activeMenuItem} id="nav" key="nav">
@@ -108,7 +110,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
       <Menu selectedKeys={[currentLocates]}>
         {Object.keys(localtes).map(item => {
           return (
-            <Menu.Item>
+            <Menu.Item key={item}>
               <Link to={item}>{localtes[item].label}</Link>
             </Menu.Item>
           );

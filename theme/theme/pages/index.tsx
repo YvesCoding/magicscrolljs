@@ -26,6 +26,7 @@ export const pageQuery = graphql`
         heroImage
         actionText
         actionLink
+        featureText
         features {
           details
           title

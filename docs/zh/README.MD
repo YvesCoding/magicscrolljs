@@ -1,16 +1,15 @@
 ---
 heroImage: /logo.png
 actionText: 快速上手 →
-actionLink: /guide/
+actionLink: /zh/guide/
+featureText: 特点
 features:
-  - title: Customizable
-    details: Full customizable, you can customizable scrollbar, rail, scroll button and so on
-  - title: Pull-to-refresh and push-to-load
-    details: Support pull-to-refresh and push-to-load and you can also customize their animations.
-  - title: Smooth-scroll
-    details: Vuescroll supports smooth-scroll, you can scroll smoothly on Vue.js!
-  - title: Carousel supported
-    details: Vuescroll supports carousel, no complex option, just wrap the content and you can have your own carousel component!
+  - title: 功能丰富
+    details: 可以自定义滚动条，滚动轨道，滚动容器等。有丰富的API和事件
+  - title: 使用简单
+    details: 每个属性都是可选的，只需要包裹内容即可出现自定义滚动条
+  - title: 兼容性良好
+    details: 兼容TypeSciprt、 SSR、 PC、移动端、触屏
 
 footer: MIT Licensed | Copyright © 2018-present Yi(Yves) Wang
 ---

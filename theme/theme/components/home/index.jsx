@@ -9,7 +9,7 @@ function Home(props) {
     <DocumentTitle title="Magic Scroll">
       <div className="home-wrapper">
         <Banner {...props} />
-        {/* <Features {...props} /> */}
+        <Features {...props} />
       </div>
     </DocumentTitle>
   );

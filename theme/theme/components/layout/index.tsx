@@ -13,8 +13,9 @@ import { graphql } from 'gatsby';
 export const contentContext = React.createContext(0);
 
 interface LayoutProps {
-  location: {
-    pathname: string;
+  pageContext: {
+    webConfig: any;
+    slug: string;
   };
   isMobile: boolean;
   children: React.ReactElement<LayoutProps>;
@@ -28,7 +29,6 @@ interface LayoutState {
 export class Layout extends React.Component<LayoutProps, LayoutState> {
   constructor(props: LayoutProps) {
     super(props);
-    const { pathname } = props.location;
     this.state = {
       pageHeight: 0,
       contentHeight: 0,
@@ -36,13 +36,20 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   }
 
   render() {
-    const { children, location, ...restProps } = this.props;
-    const { pathname } = location;
+    const {
+      children,
+      pageContext: { webConfig, slug },
+      ...restProps
+    } = this.props;
+
+    const { locales } = webConfig;
+
     const { pageHeight, contentHeight } = this.state;
     return (
       <LocaleProvider locale={enUS}>
         <div
-          className={`page-wrapper ${(pathname === '/' || pathname === 'index-cn') &&
+          className={`page-wrapper ${((!locales && slug == '/') ||
+            Object.keys(locales).includes(slug)) &&
             'index-page-wrapper'}`}
         >
           <Scrollbar
@@ -53,7 +60,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
             ref="scrollbar"
             renderPanel={this.renderPanel}
           >
-            <Header {...restProps} location={location} ref="header" />
+            <Header pageContext={{ webConfig, slug }} {...restProps} ref="header" />
             <div style={{ minHeight: contentHeight + 'px' }}>
               <contentContext.Provider value={contentHeight}>
                 {React.cloneElement(children, {
