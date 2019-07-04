@@ -1,6 +1,6 @@
 ---
 heroImage: /logo.png
-actionText: Get Started →
+actionText: 快速上手 →
 actionLink: /guide/
 features:
   - title: Customizable

@@ -4,46 +4,11 @@ import { Link } from 'gatsby';
 import * as utils from '../utils';
 import { Row, Col, Icon, Select, Input, Menu, Button, Modal, Popover } from 'antd';
 
-const { Option } = Select;
-
-const LOGO_URL = 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg';
-
-const key = 'antd-pro@2.0.0-notification-sent';
-
-let docSearch: (config: any) => void;
-if (typeof window !== 'undefined') {
-  docSearch = require('docsearch.js'); // eslint-disable-line
-}
-
-function initDocSearch(locale: 'zh-CN' | 'en-US') {
-  if (!docSearch) {
-    return;
-  }
-  const lang = locale === 'zh-CN' ? 'cn' : 'en';
-  docSearch({
-    apiKey: 'dfba5eddecb719460b9fd232af57748d',
-    indexName: 'pro_ant_design',
-    inputSelector: '#search-box input',
-    algoliaOptions: { facetFilters: [`tags:${lang}`] },
-    transformData(
-      hits: Array<{
-        url: string;
-      }>
-    ) {
-      hits.forEach(hit => {
-        hit.url = hit.url.replace('ant.design.pro', window.location.host); // eslint-disable-line
-        hit.url = hit.url.replace('https:', window.location.protocol); // eslint-disable-line
-      });
-      return hits;
-    },
-    debug: false, // Set debug to true if you want to inspect the dropdown
-  });
-}
-
 interface HeaderProps {
   isMobile: boolean;
-  location: {
-    pathname: string;
+  pageContext: {
+    webConfig: any;
+    slug: string;
   };
 }
 interface HeaderState {
@@ -115,31 +80,29 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   };
   render() {
     const { menuMode, menuVisible } = this.state;
-    const { location } = this.props;
-    const path = location.pathname;
+    const {
+      pageContext: { webConfig, slug },
+    } = this.props;
+    const localtes = webConfig.themeConfig.locales;
+    let currentLocates = utils.getCurrentLoacle(localtes, slug);
 
-    const module = location.pathname
-      .replace(/(^\/|\/$)/g, '')
-      .split('/')
-      .slice(0, -1)
-      .join('/');
-    let activeMenuItem = module || 'home';
-    if (/^blog/.test(path)) {
-      activeMenuItem = 'blog';
-    } else if (/docs/.test(path)) {
-      activeMenuItem = 'docs';
-    } else if (path === '/') {
-      activeMenuItem = 'home';
-    }
+    let {
+      themeConfig: { nav = [] },
+      title,
+    } = utils.getCurrentWebConfigBySlug(webConfig, slug);
+    const activeMenuItem = nav.filter((item: any) => {
+      return item.link && item.link.startsWith(slug);
+    });
 
     const menu = [
-      <Menu mode={menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
-        <Menu.Item key="home">
-          {/* <Link to={utils.getLocalizedPathname('/' )}>首页</Link> */}
-        </Menu.Item>
-        <Menu.Item key="docs">
-          {/* <Link to={utils.getLocalizedPathname('/docs/getting-started', isZhCN)}>文档</Link> */}
-        </Menu.Item>
+      <Menu mode={menuMode} selectedKeys={activeMenuItem} id="nav" key="nav">
+        {nav.map((item: any) => {
+          return (
+            <Menu.Item key={item.link}>
+              <Link to={item.link}>{item.text}</Link>
+            </Menu.Item>
+          );
+        })}
       </Menu>,
     ];
 
@@ -166,7 +129,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                 src="https://gw.alipayobjects.com/zos/rmsportal/tNoOLUAkyuGLXoZvaibF.svg"
                 alt="Ant Design Pro"
               /> */}
-              MagicScroll.js
+              {title}
             </Link>
           </Col>
           <Col xxl={20} xl={19} lg={16} md={16} sm={0} xs={0}>
@@ -180,9 +143,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             </div>
             <div className="header-meta">
               <div className="right-header">
-                <div id="lang">
-                  <Button size="small">语言</Button>
-                </div>
+                <Button size="small">语言</Button>
               </div>
               {menuMode === 'horizontal' ? <div id="menu">{menu}</div> : null}
             </div>
