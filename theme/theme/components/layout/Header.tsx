@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import * as utils from '../utils';
-import { Row, Col, Icon, Select, Input, Menu, Button, Modal, Popover } from 'antd';
+import { Row, Col, Icon, Select, Input, Menu, Button, Modal, Popover, Dropdown } from 'antd';
 
 interface HeaderProps {
   isMobile: boolean;
@@ -84,12 +84,10 @@ class Header extends React.Component<HeaderProps, HeaderState> {
       pageContext: { webConfig, slug },
     } = this.props;
     const localtes = webConfig.themeConfig.locales;
-    let currentLocates = utils.getCurrentLoacle(localtes, slug);
 
-    let {
-      themeConfig: { nav = [] },
-      title,
-    } = utils.getCurrentWebConfigBySlug(webConfig, slug);
+    let currentLocates = utils.getCurrentLoacle(localtes, slug);
+    let { themeConfig, title } = utils.getCurrentWebConfigBySlug(webConfig, slug);
+    const { nav = [] } = themeConfig;
     const activeMenuItem = nav.filter((item: any) => {
       return item.link && item.link.startsWith(slug);
     });
@@ -105,6 +103,18 @@ class Header extends React.Component<HeaderProps, HeaderState> {
         })}
       </Menu>,
     ];
+
+    const chooseLanguage = currentLocates ? (
+      <Menu selectedKeys={[currentLocates]}>
+        {Object.keys(localtes).map(item => {
+          return (
+            <Menu.Item>
+              <Link to={item}>{localtes[item].label}</Link>
+            </Menu.Item>
+          );
+        })}
+      </Menu>
+    ) : null;
 
     return (
       <div id="header" className="header">
@@ -143,7 +153,11 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             </div>
             <div className="header-meta">
               <div className="right-header">
-                <Button size="small">语言</Button>
+                {currentLocates ? (
+                  <Dropdown overlay={chooseLanguage} placement="bottomLeft">
+                    <Button size="small">{themeConfig.selectText}</Button>
+                  </Dropdown>
+                ) : null}
               </div>
               {menuMode === 'horizontal' ? <div id="menu">{menu}</div> : null}
             </div>
