@@ -51,13 +51,15 @@ class Page1 extends React.PureComponent {
     return (
       <div className="home-page page1">
         <div className="home-page-wrapper" id="page1-wrapper">
-          <h2>
-            <span>{featureText}</span>
-          </h2>
-          <div className="title-line-wrapper page1-line">
-            <div className="title-line" />
-          </div>
-          <OverPack targetId="layout-panel">{children}</OverPack>
+          <OverPack targetId="layout-panel">
+            <h2>
+              <span>{featureText}</span>
+            </h2>
+            <div className="title-line-wrapper page1-line">
+              <div className="title-line" />
+            </div>
+            {children}
+          </OverPack>
         </div>
       </div>
     );

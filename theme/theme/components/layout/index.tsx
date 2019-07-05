@@ -3,12 +3,10 @@ import ReactDom from 'react-dom';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import Media from 'react-media';
-import * as utils from '../utils';
 import '../../static/style';
 import Header from './Header';
 import Footer from './Footer';
 import Scrollbar from 'magic-scroll';
-import { graphql } from 'gatsby';
 
 export const contentContext = React.createContext(0);
 

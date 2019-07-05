@@ -90,7 +90,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     const { nav = [] } = themeConfig;
     const activeMenuItem = nav
       .filter((item: any) => {
-        return item.link && item.link.startsWith(slug);
+        return item.link && slug.startsWith(item.link);
       })
       .map((_: string) => _.link);
 
