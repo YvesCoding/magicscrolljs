@@ -36,30 +36,21 @@ class Page1 extends React.PureComponent {
       });
 
     children = children.map((item, i) => (
-      <QueueAnim
-        className="page1-box-wrapper"
-        key={i.toString()}
-        type="bottom"
-        leaveReverse
-        delay={[i * 200, (children.length - 1 - i) * 200]}
-        component="ul"
-      >
+      <ul className="page1-box-wrapper" key={i.toString()}>
         {item}
-      </QueueAnim>
+      </ul>
     ));
 
     return (
       <div className="home-page page1">
         <div className="home-page-wrapper" id="page1-wrapper">
-          <OverPack targetId="layout-panel">
-            <h2>
-              <span>{featureText}</span>
-            </h2>
-            <div className="title-line-wrapper page1-line">
-              <div className="title-line" />
-            </div>
-            {children}
-          </OverPack>
+          <h2>
+            <span>{featureText}</span>
+          </h2>
+          <div className="title-line-wrapper page1-line">
+            <div className="title-line" />
+          </div>
+          {children}
         </div>
       </div>
     );

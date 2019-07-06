@@ -13,11 +13,7 @@ export default function(props) {
   return (
     <div className="home-page page2">
       <div className="home-page-wrapper">
-        <OverPack always={true} targetId="layout-panel">
-          <QueueAnim key="queue" type="bottom" leaveReverse className="page2-content">
-            <MdxRender key="render">{code.body}</MdxRender>
-          </QueueAnim>
-        </OverPack>
+        <MdxRender key="render">{code.body}</MdxRender>
       </div>
     </div>
   );
