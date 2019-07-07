@@ -28,7 +28,9 @@ function Banner(props) {
               {frontmatter.actionText}
             </Button>
           </Link>
-          <GitHubButton key="github-button" type="stargazers" namespace={namespace} repo={repo} />
+          {frontmatter.showStar ? (
+            <GitHubButton key="github-button" type="stargazers" namespace={namespace} repo={repo} />
+          ) : null}
         </div>
       </QueueAnim>
     </div>

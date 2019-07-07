@@ -54,6 +54,7 @@ export interface IAllMdxData {
 
 export default function Template({
   data,
+  pageContext,
   ...rest
 }: {
   data: { mdx: IMdxData; allMdx: IAllMdxData };
@@ -61,25 +62,28 @@ export default function Template({
   location: {
     pathname: string;
   };
+  pageContext: {
+    webConfig: any;
+    slug: string;
+  };
 }) {
   const { mdx, allMdx } = data;
   const { frontmatter, fields, code, tableOfContents } = mdx;
   const { edges } = allMdx;
   const menuList = edges.map(({ node }) => {
-    const newFrontmatter = node.frontmatter;
     return {
       slug: node.fields.slug,
       meta: {
-        ...newFrontmatter,
+        ...node.frontmatter,
         slug: node.fields.slug,
         filename: node.fields.slug,
       },
-      ...newFrontmatter,
+      ...node.frontmatter,
       filename: node.fields.path,
     };
   });
   return (
-    <WrapperLayout {...rest}>
+    <WrapperLayout data={data} pageContext={pageContext} {...rest}>
       <MainContent
         {...rest}
         localizedPageData={{

@@ -1,11 +1,11 @@
 import React from 'react';
 import Media from 'react-media';
 
-import Home from '../components/home';
+import Home from '../components/home/index.jsx';
 import WrapperLayout from '../components/layout';
 import { graphql } from 'gatsby';
 
-const IndexPage = props => {
+const IndexPage = (props: any) => {
   const isNode = typeof window === `undefined`;
   return (
     <WrapperLayout {...props}>
@@ -27,6 +27,8 @@ export const pageQuery = graphql`
         actionText
         actionLink
         featureText
+        showStar
+        footer
         features {
           details
           title

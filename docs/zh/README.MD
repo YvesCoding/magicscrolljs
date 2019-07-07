@@ -3,6 +3,7 @@ heroImage: /logo.png
 actionText: 快速上手 →
 actionLink: /zh/guide/
 featureText: 特点
+showStar: true
 features:
   - title: 功能丰富
     details: 可以自定义滚动条，滚动轨道，滚动容器等。有丰富的API和事件

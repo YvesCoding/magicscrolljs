@@ -6,14 +6,16 @@ import Media from 'react-media';
 import '../../static/style';
 import Header from './Header';
 import Footer from './Footer';
-import Scrollbar from 'magic-scroll';
-
-export const contentContext = React.createContext(0);
 
 interface LayoutProps {
   pageContext: {
     webConfig: any;
     slug: string;
+  };
+  data: {
+    mdx: {
+      frontmatter: any;
+    };
   };
   isMobile: boolean;
   children: React.ReactElement<LayoutProps>;
@@ -21,7 +23,6 @@ interface LayoutProps {
 
 interface LayoutState {
   pageHeight: number;
-  contentHeight: number;
 }
 
 export class Layout extends React.Component<LayoutProps, LayoutState> {
@@ -29,7 +30,6 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     super(props);
     this.state = {
       pageHeight: 0,
-      contentHeight: 0,
     };
   }
 
@@ -42,7 +42,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
     const { locales } = webConfig;
 
-    const { pageHeight, contentHeight } = this.state;
+    const { pageHeight } = this.state;
     return (
       <LocaleProvider locale={enUS}>
         <div
@@ -50,25 +50,14 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
             Object.keys(locales).includes(slug)) &&
             'index-page-wrapper'}`}
         >
-          <Scrollbar
-            scrollingX={false}
-            style={{ height: pageHeight + 'px' }}
-            barBg="#1890ff"
-            railCls="page-rail"
-            ref="scrollbar"
-            renderPanel={this.renderPanel}
-          >
-            <Header pageContext={{ webConfig, slug }} {...restProps} ref="header" />
-            <div style={{ minHeight: contentHeight + 'px' }}>
-              <contentContext.Provider value={contentHeight}>
-                {React.cloneElement(children, {
-                  ...children.props,
-                  isMobile: restProps.isMobile,
-                })}
-              </contentContext.Provider>
-            </div>
-            <Footer {...restProps} location={location} ref="footer" />
-          </Scrollbar>
+          <Header pageContext={{ webConfig, slug }} {...restProps} ref="header" />
+          <div style={{ minHeight: pageHeight + 'px' }}>
+            {React.cloneElement(children, {
+              ...children.props,
+              isMobile: restProps.isMobile,
+            })}
+          </div>
+          <Footer {...restProps} ref="footer" />
         </div>
       </LocaleProvider>
     );
@@ -86,10 +75,6 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   ajustScrollbarHeight = () => {
     this.setState({
       pageHeight: window.innerHeight,
-      contentHeight:
-        window.innerHeight -
-        this.getDomByRef('header').offsetHeight -
-        this.getDomByRef('footer').offsetHeight,
     });
   };
 

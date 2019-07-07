@@ -3,6 +3,7 @@ heroImage: /logo.png
 actionText: Get Started →
 actionLink: /guide/
 featureText: Features
+showStar: true
 features:
   - title: Rich Function
     details: You can customize scrollbar, rail, scroll container, etc. Rich APIs and Events
