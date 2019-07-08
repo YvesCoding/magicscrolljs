@@ -33,13 +33,20 @@ export function isLocalStorageNameSupported() {
   }
 }
 
-export function getCurrentLoacle(locales: any, slug: string) {
+export function getCurrentLoacle(webConfig: any, slug: string) {
+  const locales = webConfig.themeConfig.locales;
+  const base = webConfig.base;
+
+  function nomalizeSlug(_path: string) {
+    return (base + _path).replace(/\/\//g, '/');
+  }
+
   if (!locales) return false;
 
   let targetLocale = '/';
 
   for (let path in locales) {
-    if (path != targetLocale && slug.startsWith(path)) {
+    if (path != targetLocale && slug.startsWith(nomalizeSlug(path))) {
       targetLocale = path;
     }
   }
@@ -48,8 +55,7 @@ export function getCurrentLoacle(locales: any, slug: string) {
 }
 
 export function getCurrentWebConfigBySlug(webConfig: any, slug: string) {
-  const locales = webConfig.themeConfig.locales;
-  const targetLocale = getCurrentLoacle(locales, slug);
+  const targetLocale = getCurrentLoacle(webConfig, slug);
   if (!targetLocale) return webConfig;
 
   return {

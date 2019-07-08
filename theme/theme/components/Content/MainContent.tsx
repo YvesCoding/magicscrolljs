@@ -1,7 +1,4 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable react/forbid-prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import { Badge, Row, Col, Menu, Icon } from 'antd';
 import classNames from 'classnames';
@@ -27,14 +24,9 @@ function getActiveMenuItem(props: MainContentProps): string {
   return activeMenu.slug;
 }
 
-interface MenuDataItem {
+interface MenuDataItem extends IGraphqlFrontmatterData {
   slug: string;
-  title: string;
-  important: boolean;
   collapsable: boolean;
-  disabled: boolean;
-  link: string;
-  subtitle: string;
   children: MenuDataItem[];
 }
 

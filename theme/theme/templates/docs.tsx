@@ -6,9 +6,9 @@ import MainContent from '../components/Content/MainContent';
 export interface IGraphqlFrontmatterData {
   title: string;
   important: boolean;
-  subtitle: string;
   disabled: boolean;
   link: string;
+  subtitle: string;
 }
 
 export interface IMarkDownFields {
@@ -83,7 +83,6 @@ export default function Template({
           meta: {
             ...frontmatter,
             ...fields,
-            filename: fields.slug,
           },
           toc: tableOfContents,
           code,

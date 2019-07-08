@@ -36,7 +36,6 @@ module.exports = async ({ graphql, actions }) => {
             node {
               fields {
                 slug
-                underScoreCasePath
                 path
               }
             }
@@ -55,14 +54,10 @@ module.exports = async ({ graphql, actions }) => {
 
   const edges = allMdx.data.allMdx.edges;
   edges.forEach(edge => {
-    const { slug, underScoreCasePath } = edge.node.fields;
+    const { slug } = edge.node.fields;
     if (!isHome(slug)) {
       const template = docsTemplate;
       const createArticlePage = path => {
-        if (underScoreCasePath !== path) {
-          redirects[underScoreCasePath] = path;
-        }
-
         return createPage({
           path,
           component: template,

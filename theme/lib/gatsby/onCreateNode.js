@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
 const himalaya = require('himalaya');
-var { themeConfig } = require('../util').getFinalConfig();
+var { themeConfig, base } = require('../util').getFinalConfig();
 
 // // 获取用户的头像列表
 const getAvatarList = async filename => {
@@ -36,13 +36,10 @@ const getAvatarList = async filename => {
   return data;
 };
 
-const getKebabCase = str => {
-  return str
-    .replace(/[A-Z]/g, letter => {
-      return `-${letter.toLowerCase()}`;
-    })
-    .replace(/\/-/g, '/');
-};
+function withBase(_path) {
+  return (base + _path).replace(/\/\//g, '/');
+}
+
 // Add custom fields to MarkdownRemark nodes.
 module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -69,12 +66,7 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
       createNodeField({
         node,
         name: 'slug',
-        value: getKebabCase(slug),
-      });
-      createNodeField({
-        node,
-        name: 'underScoreCasePath',
-        value: slug,
+        value: withBase(slug),
       });
 
       createNodeField({
