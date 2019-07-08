@@ -82,6 +82,7 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
         name: 'path',
         value: mdFilePath,
       });
+
       const html = await getAvatarList(mdFilePath);
       createNodeField({
         node,

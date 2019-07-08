@@ -7,10 +7,36 @@ import { Badge, Row, Col, Menu, Icon } from 'antd';
 import classNames from 'classnames';
 import MobileMenu from 'rc-drawer-menu';
 import Article from './Article';
-import { isZhCN, getMenuItems, MenuDataItem, IMenuData } from '../utils';
-import { IFrontmatterData } from '../../templates/docs';
+import { IGraphqlFrontmatterData, IMarkDownFields } from '../../templates/docs';
 
 const { SubMenu } = Menu;
+
+function getFlatMenuList(menuList: MenuDataItem[]): MenuDataItem[] {
+  return menuList.reduce((pre, cur) => {
+    return (cur.children && cur.children.length ? getFlatMenuList(cur.children) : [cur]).concat(
+      pre
+    );
+  }, []);
+}
+
+function getActiveMenuItem(props: MainContentProps): string {
+  const newMenusList = getFlatMenuList(props.menuList);
+  const activeMenu = newMenusList.find(menu => menu.slug == props.localizedPageData.meta.slug);
+  if (!activeMenu) return '';
+
+  return activeMenu.slug;
+}
+
+interface MenuDataItem {
+  slug: string;
+  title: string;
+  important: boolean;
+  collapsable: boolean;
+  disabled: boolean;
+  link: string;
+  subtitle: string;
+  children: MenuDataItem[];
+}
 
 export interface MainContentProps {
   isMobile: boolean;
@@ -19,7 +45,7 @@ export interface MainContentProps {
   };
   menuList: MenuDataItem[];
   localizedPageData: {
-    meta: IFrontmatterData;
+    meta: IGraphqlFrontmatterData & IMarkDownFields;
     toc: {
       items: Array<{
         url: string;
@@ -35,38 +61,7 @@ export interface MainContentProps {
 interface MainContentState {
   openKeys: string[];
 }
-
-function getActiveMenuItem(props: MainContentProps) {
-  const { pathname } = props.location;
-  if (pathname.endsWith('/')) {
-    return pathname.substring(0, pathname.length - 1);
-  }
-  return pathname;
-}
-
-function getModuleDataWithProps(props: MainContentProps) {
-  const moduleData = props.menuList;
-  const excludedSuffix = isZhCN(props.location.pathname) ? 'zh-CN' : 'en-US';
-  return moduleData.filter(({ filename }) => {
-    if (!filename) {
-      return false;
-    }
-    if (!filename.includes('zh-CN') && !filename.includes('en-US')) {
-      return true;
-    }
-    return filename.includes(excludedSuffix);
-  });
-}
-
-function isNotTopLevel(level: string) {
-  return level !== 'topLevel';
-}
-
 export default class MainContent extends React.PureComponent<MainContentProps, MainContentState> {
-  static contextTypes = {
-    intl: PropTypes.object.isRequired,
-  };
-
   constructor(props: MainContentProps) {
     super(props);
     this.state = {
@@ -110,49 +105,28 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
       openKeys,
     });
   };
-  currentModule: string;
   getSideBarOpenKeys(nextProps: MainContentProps) {
-    const { pathname } = nextProps.location;
-    const moduleData = getModuleDataWithProps(nextProps);
-    const item = moduleData.find(({ slug }) => pathname.includes(slug));
-    if (item) {
-      return [item.type];
-    }
-    return [];
+    const { menuList } = nextProps;
+    const newMenusList = getFlatMenuList(menuList);
+    return newMenusList.filter(menu => !menu.collapsable).map(menu => menu.slug);
   }
-
-  convertFilename = (filename: string) => {
-    const {
-      location: { pathname },
-    } = this.props;
-    if (isZhCN(pathname) && !filename.includes('-cn')) {
-      return `${filename}-cn`;
-    }
-    return filename;
-  };
 
   generateMenuItem = ({ before = null, after = null }, item: MenuDataItem) => {
     if (!item.title) {
       return;
     }
-    const {
-      intl: { locale },
-    } = this.context as {
-      intl: {
-        locale: 'zh-CN' | 'en-US';
-      };
-    };
+
     const text = [
       <span key="english">{item.title}</span>,
       <span className="chinese" key="chinese">
-        {locale === 'zh-CN' && item.subtitle}
+        {item.subtitle}
       </span>,
     ];
 
     const disabled = item.disabled;
 
     const child = !item.link ? (
-      <Link to={this.convertFilename(item.filename)}>
+      <Link to={item.slug}>
         {before}
         {text}
         {after}
@@ -170,54 +144,40 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
       </a>
     );
     return (
-      <Menu.Item key={this.convertFilename(item.filename)} disabled={disabled}>
+      <Menu.Item key={item.slug || item.link} disabled={disabled}>
         {item.important ? <Badge dot={item.important}>{child}</Badge> : child}
       </Menu.Item>
     );
   };
 
-  generateSubMenuItems = (obj?: IMenuData, footerNavIcons = {}) => {
-    if (!obj) return [];
-    const topLevel = ((obj.topLevel as MenuDataItem[]) || []).map(
-      this.generateMenuItem.bind(this, footerNavIcons)
-    );
-    const itemGroups = Object.keys(obj)
-      .filter(isNotTopLevel)
-      .map(type => {
-        const groupItems = (obj[type] as MenuDataItem[])
-          .sort((a, b) => {
-            if ('order' in a && 'order' in b) {
-              return a.order - b.order;
-            }
-            return a.title.charCodeAt(0) - b.title.charCodeAt(0);
-          })
-          .map(this.generateMenuItem.bind(this, footerNavIcons));
-        return (
-          <SubMenu title={type} key={type}>
-            {groupItems}
-          </SubMenu>
-        );
-      });
-    return [...topLevel, ...itemGroups];
+  generateSubMenuItems = (menus?: MenuDataItem[], footerNavIcons = {}) => {
+    if (!menus) return [];
+    const generateMenuItem = this.generateMenuItem.bind(this, footerNavIcons);
+    const itemGroups = menus.map(menu => {
+      if (!menu.children || !menu.children.length) {
+        return generateMenuItem(menu);
+      }
+
+      const groupItems = menu.children.map(this.generateMenuItem.bind(this, footerNavIcons));
+      return (
+        <SubMenu title={menu.title} key={menu.title}>
+          {groupItems}
+        </SubMenu>
+      );
+    });
+    return itemGroups;
   };
 
   getMenuItems = (footerNavIcons = {}) => {
-    const moduleData = getModuleDataWithProps(this.props);
-    const {
-      intl: { locale },
-    } = this.context;
-    const menuItems: IMenuData = getMenuItems(moduleData, locale) || {};
-    let topLevel =
-      this.generateSubMenuItems(menuItems['topLevel'] as IMenuData, footerNavIcons) || [];
+    const moduleData = this.props.menuList;
 
-    const result = [...topLevel].filter(({ key }) => key);
-    return result;
+    return this.generateSubMenuItems(moduleData, footerNavIcons);
   };
 
   getPreAndNext = (menuItems: any) => {
     const {
       localizedPageData: {
-        meta: { filename },
+        meta: { slug },
       },
     } = this.props;
 
@@ -227,8 +187,9 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
         : Object.keys(menuItems).reduce((pre, key) => {
             return pre.concat(menuItems[key].props.children);
           }, []);
-    const index = list.findIndex((item: { key: string }) => {
-      return item.key === filename || item.key === `${filename}-cn`;
+
+    const index = list.findIndex((item: any) => {
+      return item.key === slug;
     });
 
     if (index === -1) {

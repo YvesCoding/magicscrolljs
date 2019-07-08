@@ -3,30 +3,23 @@ import { graphql } from 'gatsby';
 import WrapperLayout from '../components/layout';
 import MainContent from '../components/Content/MainContent';
 
-interface IMarkDownFields {
-  path: string;
+export interface IGraphqlFrontmatterData {
+  title: string;
+  important: boolean;
+  subtitle: string;
+  disabled: boolean;
+  link: string;
+}
+
+export interface IMarkDownFields {
   slug: string;
-  modifiedTime: number;
+  path: string;
+  modifiedTime: string;
   avatarList: Array<{
     href: string;
     text: string;
     src: string;
   }>;
-}
-export interface IFrontmatterData extends IMarkDownFields {
-  title: string;
-  order: number;
-  filename: string;
-  subtitle: string;
-  path: string;
-  disabled: boolean;
-  important: boolean;
-}
-
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
-export interface IGraphqlFrontmatterData extends Omit<IFrontmatterData, 'title'> {
-  title: string;
 }
 
 export interface IMdxData {
@@ -91,7 +84,6 @@ export default function Template({
             ...frontmatter,
             ...fields,
             filename: fields.slug,
-            path: fields.path,
           },
           toc: tableOfContents,
           code,
@@ -115,6 +107,10 @@ export const pageQuery = graphql`
           }
           frontmatter {
             title
+            important
+            subtitle
+            disabled
+            link
           }
           fields {
             slug
@@ -132,6 +128,7 @@ export const pageQuery = graphql`
         modifiedTime
         path
         slug
+        avatarList
       }
       code {
         body
