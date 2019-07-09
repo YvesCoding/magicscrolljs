@@ -85,7 +85,9 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     } = this.props;
 
     let currentLocates = utils.getCurrentLoacle(webConfig, slug);
-    let { themeConfig, title } = utils.getCurrentWebConfigBySlug(webConfig, slug);
+    let {
+      currentWebConfig: { themeConfig, title },
+    } = utils.getCurrentWebConfigBySlug(webConfig, slug);
     const { nav = [] } = themeConfig;
     const activeMenuItem = nav
       .filter((item: any) => {

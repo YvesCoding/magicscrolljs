@@ -12,7 +12,7 @@ function Banner(props) {
       mdx: { frontmatter },
     },
   } = props;
-  const config = getCurrentWebConfigBySlug(webConfig, slug);
+  const { currentWebConfig: config } = getCurrentWebConfigBySlug(webConfig, slug);
   const [namespace, repo] = webConfig.themeConfig.repo.split('/');
   return (
     <div className="banner-wrapper">

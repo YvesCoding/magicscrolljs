@@ -2,13 +2,14 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import WrapperLayout from '../components/layout';
 import MainContent from '../components/Content/MainContent';
+import { resolveSidebarItems } from '../components/utils';
 
 export interface IGraphqlFrontmatterData {
   title: string;
-  important: boolean;
-  disabled: boolean;
-  link: string;
-  subtitle: string;
+  important?: boolean;
+  disabled?: boolean;
+  link?: string;
+  subtitle?: string;
 }
 
 export interface IMarkDownFields {
@@ -36,13 +37,15 @@ export interface IMdxData {
   fields: IMarkDownFields;
 }
 
+export type Edges = Array<{
+  node: {
+    frontmatter: IGraphqlFrontmatterData;
+    fields: IMarkDownFields;
+  };
+}>;
+
 export interface IAllMdxData {
-  edges: Array<{
-    node: {
-      frontmatter: IGraphqlFrontmatterData;
-      fields: IMarkDownFields;
-    };
-  }>;
+  edges: Edges;
 }
 
 export default function Template({
@@ -62,19 +65,7 @@ export default function Template({
 }) {
   const { mdx, allMdx } = data;
   const { frontmatter, fields, code, tableOfContents } = mdx;
-  const { edges } = allMdx;
-  const menuList = edges.map(({ node }) => {
-    return {
-      slug: node.fields.slug,
-      meta: {
-        ...node.frontmatter,
-        slug: node.fields.slug,
-        filename: node.fields.slug,
-      },
-      ...node.frontmatter,
-      filename: node.fields.path,
-    };
-  });
+  const menuList = resolveSidebarItems(allMdx, pageContext.webConfig, pageContext.slug);
   return (
     <WrapperLayout data={data} pageContext={pageContext} {...rest}>
       <MainContent
@@ -127,7 +118,11 @@ export const pageQuery = graphql`
         modifiedTime
         path
         slug
-        avatarList
+        avatarList {
+          href
+          text
+          src
+        }
       }
       code {
         body

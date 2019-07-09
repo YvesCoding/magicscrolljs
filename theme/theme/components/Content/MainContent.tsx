@@ -16,7 +16,7 @@ function getFlatMenuList(menuList: MenuDataItem[]): MenuDataItem[] {
   }, []);
 }
 
-function getActiveMenuItem(props: MainContentProps): string {
+function getActiveMenuItem(props: MainContentProps): string | undefined {
   const newMenusList = getFlatMenuList(props.menuList);
   const activeMenu = newMenusList.find(menu => menu.slug == props.localizedPageData.meta.slug);
   if (!activeMenu) return '';
@@ -24,9 +24,9 @@ function getActiveMenuItem(props: MainContentProps): string {
   return activeMenu.slug;
 }
 
-interface MenuDataItem extends IGraphqlFrontmatterData {
-  slug: string;
-  collapsable: boolean;
+export interface MenuDataItem extends IGraphqlFrontmatterData {
+  slug?: string;
+  collapsable?: boolean;
   children: MenuDataItem[];
 }
 
@@ -57,7 +57,7 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
   constructor(props: MainContentProps) {
     super(props);
     this.state = {
-      openKeys: this.getSideBarOpenKeys(props) || [],
+      openKeys: (this.getSideBarOpenKeys(props) || []) as Array<string>,
     };
   }
 
@@ -66,7 +66,7 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
   }
 
   componentWillReceiveProps(nextProps: MainContentProps) {
-    const openKeys = this.getSideBarOpenKeys(nextProps);
+    const openKeys = this.getSideBarOpenKeys(nextProps) as Array<string>;
     if (openKeys) {
       this.setState({
         openKeys,
@@ -118,7 +118,7 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
     const disabled = item.disabled;
 
     const child = !item.link ? (
-      <Link to={item.slug}>
+      <Link to={item.slug || ''}>
         {before}
         {text}
         {after}
@@ -196,7 +196,7 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
   render() {
     const { localizedPageData, isMobile } = this.props;
 
-    const activeMenuItem = getActiveMenuItem(this.props);
+    const activeMenuItem = getActiveMenuItem(this.props) as string;
     const menuItems = this.getMenuItems();
     const { prev, next } = this.getPreAndNext(menuItems);
     const mainContainerClass = classNames('main-container', {});
