@@ -1,5 +1,5 @@
 var path = require('path');
-var defaultConfig = require(path.resolve(__dirname, './ant-docs.config.default'));
+var defaultConfig = require(path.resolve(__dirname, '../__default__/default-config'));
 
 module.exports.getUserConfig = () => {
   var config = {};

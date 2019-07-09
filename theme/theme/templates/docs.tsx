@@ -118,11 +118,6 @@ export const pageQuery = graphql`
         modifiedTime
         path
         slug
-        avatarList {
-          href
-          text
-          src
-        }
       }
       code {
         body
@@ -130,3 +125,8 @@ export const pageQuery = graphql`
     }
   }
 `;
+// avatarList {
+//   href
+//   text
+//   src
+// }

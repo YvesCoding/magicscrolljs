@@ -47,6 +47,8 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
     case 'Mdx':
       const { relativePath, sourceInstanceName } = getNode(node.parent);
 
+      if (sourceInstanceName == '/default') return;
+
       let slug;
       const filePath = node.fileAbsolutePath; // path.join(process.cwd(), sourceInstanceName, relativePath);
       const stats = fs.statSync(filePath);
@@ -75,11 +77,11 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
         value: mdFilePath,
       });
 
-      const html = await getAvatarList(mdFilePath);
-      createNodeField({
-        node,
-        name: 'avatarList',
-        value: html,
-      });
+    // const html = await getAvatarList(mdFilePath);
+    // createNodeField({
+    //   node,
+    //   name: 'avatarList',
+    //   value: html,
+    // });
   }
 };
