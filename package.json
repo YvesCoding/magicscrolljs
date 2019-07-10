@@ -21,13 +21,10 @@
     "start": "gatsby develop"
   },
   "dependencies": {
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
-    "gatsby": "^2.2.7",
     "antd": "latest",
-    "magic-scroll": "0.0.6"
-  },
-  "devDependencies": {
-    "gatsby-theme-ant-docs": "^0.0.4"
-  }
+    "gatsby": "^2.13.11",
+    "magic-scroll": "0.0.6",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2"
+  } 
 }

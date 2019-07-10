@@ -55,35 +55,33 @@ module.exports = async ({ graphql, actions }) => {
   const edges = allMdx.data.allMdx.edges;
   edges.forEach(edge => {
     const fields = edge.node.fields;
-    if (fields) {
-      const { slug } = fields;
-      if (!isHome(slug)) {
-        const template = docsTemplate;
-        const createArticlePage = path => {
-          return createPage({
-            path,
-            component: template,
-            context: {
-              webConfig,
-              slug,
-              // if is docs page
-              type: slug.includes('docs/') ? '/docs/' : '/blog/',
-            },
-          });
-        };
-
-        // Register primary URL.
-        createArticlePage(slug);
-      } else {
-        createPage({
-          path: slug,
-          component: indexTemplate,
+    const { slug } = fields;
+    if (!isHome(slug)) {
+      const template = docsTemplate;
+      const createArticlePage = path => {
+        return createPage({
+          path,
+          component: template,
           context: {
             webConfig,
             slug,
+            // if is docs page
+            type: slug.includes('docs/') ? '/docs/' : '/blog/',
           },
         });
-      }
+      };
+
+      // Register primary URL.
+      createArticlePage(slug);
+    } else {
+      createPage({
+        path: slug,
+        component: indexTemplate,
+        context: {
+          webConfig,
+          slug,
+        },
+      });
     }
   });
 

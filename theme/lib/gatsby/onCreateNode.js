@@ -47,8 +47,6 @@ module.exports = exports.onCreateNode = async ({ node, actions, getNode }) => {
     case 'Mdx':
       const { relativePath, sourceInstanceName } = getNode(node.parent);
 
-      if (sourceInstanceName == '/default') return;
-
       let slug;
       const filePath = node.fileAbsolutePath; // path.join(process.cwd(), sourceInstanceName, relativePath);
       const stats = fs.statSync(filePath);
