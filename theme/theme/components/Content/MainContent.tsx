@@ -10,9 +10,10 @@ const { SubMenu } = Menu;
 
 function getFlatMenuList(menuList: MenuDataItem[]): MenuDataItem[] {
   return menuList.reduce((pre, cur) => {
-    return (cur.children && cur.children.length ? getFlatMenuList(cur.children) : [cur]).concat(
-      pre
-    );
+    return (cur.children && cur.children.length
+      ? getFlatMenuList(cur.children).concat(cur)
+      : [cur]
+    ).concat(pre);
   }, []);
 }
 
@@ -100,7 +101,7 @@ export default class MainContent extends React.PureComponent<MainContentProps, M
   getSideBarOpenKeys(nextProps: MainContentProps) {
     const { menuList } = nextProps;
     const newMenusList = getFlatMenuList(menuList);
-    return newMenusList.filter(menu => !menu.collapsable).map(menu => menu.slug);
+    return newMenusList.filter(menu => !menu.collapsable).map(menu => menu.title);
   }
 
   generateMenuItem = ({ before = null, after = null }, item: MenuDataItem) => {
