@@ -4,14 +4,14 @@ import DocumentTitle from 'react-document-title';
 import { Affix } from 'antd';
 import delegate from 'delegate';
 import EditButton from './EditButton';
-import { IFrontmatterData } from '../../templates/docs';
+import { IGraphqlFrontmatterData, IMarkDownFields } from '../../templates/docs';
 import moment from 'moment';
 import AvatarList from './AvatarList';
 import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 
 interface ArticleProps {
   content: {
-    meta: IFrontmatterData;
+    meta: IGraphqlFrontmatterData & IMarkDownFields;
     toc: {
       items: Array<{
         url: string;
@@ -25,10 +25,6 @@ interface ArticleProps {
 }
 
 export default class Article extends React.PureComponent<ArticleProps> {
-  static contextTypes = {
-    intl: PropTypes.object.isRequired,
-  };
-
   componentDidMount() {
     // Add ga event click
     this.delegation = delegate(
@@ -55,17 +51,13 @@ export default class Article extends React.PureComponent<ArticleProps> {
   node: HTMLElement | null | undefined;
 
   render() {
+    console.log(this.props);
+
     const props = this.props;
     const content = props.content;
     const { meta } = content;
     const { title, subtitle, path, modifiedTime, avatarList } = meta;
-    const {
-      intl: { locale },
-    } = this.context as {
-      intl: {
-        locale: 'zh-CN' | 'en-US';
-      };
-    };
+
     return (
       <DocumentTitle title={`${title} - Magic Scroll`}>
         <>
@@ -77,9 +69,7 @@ export default class Article extends React.PureComponent<ArticleProps> {
           >
             <h1>
               {title}
-              {!subtitle || locale === 'en-US' ? null : (
-                <span className="subtitle">{subtitle}</span>
-              )}
+              {!subtitle ? null : <span className="subtitle">{subtitle}</span>}
               <EditButton title="编辑文件" filename={path} />
             </h1>
 

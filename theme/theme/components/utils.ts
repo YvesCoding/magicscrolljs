@@ -1,5 +1,6 @@
 import { IAllMdxData, Edges } from '../templates/docs';
 import { MenuDataItem } from './Content/MainContent';
+import { func } from 'prop-types';
 
 export function ping(callback: (arg0: any) => void) {
   // eslint-disable-next-line
@@ -188,14 +189,28 @@ export function resolveSidebarItems(
   if (!pageSidebarConfig) {
     return [];
   } else {
-    const sidebarConfig = pageSidebarConfig[localte]
-      ? pageSidebarConfig[localte]
-      : pageSidebarConfig;
+    const { config, path } = resolveSidebarConfig(currentSlug, pageSidebarConfig);
 
-    return sidebarConfig
-      ? sidebarConfig.map((item: any) => resolveItem(item, edges, base, false))
+    return config
+      ? config.map((item: any) => resolveItem(item, edges, resolvePath(path, base), false))
       : [];
   }
+}
+
+function resolveSidebarConfig(slug: string, sidebarConfigs: any) {
+  for (let path in sidebarConfigs) {
+    if (slug.startsWith(path)) {
+      return {
+        path,
+        config: sidebarConfigs[path],
+      };
+    }
+  }
+
+  return {
+    path: '',
+    config: null,
+  };
 }
 
 function resolveItem(item: any, pages: Edges, base: string, isNested: boolean): MenuDataItem {

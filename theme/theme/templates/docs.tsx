@@ -63,6 +63,8 @@ export default function Template({
     slug: string;
   };
 }) {
+  console.log(data);
+
   const { mdx, allMdx } = data;
   const { frontmatter, fields, code, tableOfContents } = mdx;
   const menuList = resolveSidebarItems(allMdx, pageContext.webConfig, pageContext.slug);
@@ -86,25 +88,22 @@ export default function Template({
 
 export const pageQuery = graphql`
   query DocsQuery($slug: String!) {
-    allMdx(
-      sort: { fields: fields___slug, order: DESC }
-      filter: { fields: { slug: { glob: "/docs/*" } } }
-    ) {
+    allMdx {
       edges {
         node {
-          code {
-            body
-          }
-          frontmatter {
-            title
-            important
-            subtitle
-            disabled
-            link
-          }
           fields {
             slug
             path
+          }
+          frontmatter {
+            title
+            subtitle
+            link
+            important
+            disabled
+          }
+          code {
+            body
           }
         }
       }
