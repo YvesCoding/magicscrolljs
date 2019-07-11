@@ -11,17 +11,17 @@ class Footer extends React.Component<{
   render() {
     const {
       data: {
-        mdx: { frontmatter },
+        mdx: {
+          frontmatter: { footer },
+        },
       },
     } = this.props;
 
-    console.log(frontmatter);
-
-    return (
+    return footer ? (
       <footer id="footer">
-        <div className="bottom-bar">{frontmatter.footer}</div>
+        <div className="bottom-bar">{footer}</div>
       </footer>
-    );
+    ) : null;
   }
 }
 

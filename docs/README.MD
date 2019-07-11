@@ -17,13 +17,7 @@ footer: MIT Licensed | Copyright © 2018-present Yi(Yves) Wang
 
 import Demo from './home-intro.js'
 
-<h2><span>Get Started</span></h2>
-
-<center>
-
-It only takes three steps.
-
-</center>
+## Get Started
 
 1. Install `magic-scroll` via `yarn` or `npm`
 

@@ -21,16 +21,11 @@ interface LayoutProps {
   children: React.ReactElement<LayoutProps>;
 }
 
-interface LayoutState {
-  pageHeight: number;
-}
+interface LayoutState {}
 
 export class Layout extends React.Component<LayoutProps, LayoutState> {
   constructor(props: LayoutProps) {
     super(props);
-    this.state = {
-      pageHeight: 0,
-    };
   }
 
   render() {
@@ -42,7 +37,6 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
     const { locales } = webConfig;
 
-    const { pageHeight } = this.state;
     return (
       <LocaleProvider locale={enUS}>
         <div
@@ -51,12 +45,11 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
             'index-page-wrapper'}`}
         >
           <Header pageContext={{ webConfig, slug }} {...restProps} ref="header" />
-          <div style={{ minHeight: pageHeight + 'px' }}>
-            {React.cloneElement(children, {
-              ...children.props,
-              isMobile: restProps.isMobile,
-            })}
-          </div>
+          {React.cloneElement(children, {
+            ...children.props,
+            isMobile: restProps.isMobile,
+            ref: 'content',
+          })}
           <Footer {...restProps} ref="footer" />
         </div>
       </LocaleProvider>
@@ -72,14 +65,21 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     window.removeEventListener('resize', this.ajustScrollbarHeight);
   }
 
-  ajustScrollbarHeight = () => {
-    this.setState({
-      pageHeight: window.innerHeight,
-    });
-  };
+  componentDidUpdate() {
+    this.ajustScrollbarHeight();
+  }
 
-  getDomByRef = (ref: 'header' | 'footer'): HTMLDivElement => {
-    return ReactDom.findDOMNode(this.refs[ref]) as HTMLDivElement;
+  ajustScrollbarHeight = () => {
+    const contentDom = ReactDom.findDOMNode(this.refs.content) as HTMLDivElement;
+    const header = ReactDom.findDOMNode(this.refs.header) as HTMLDivElement;
+    const footer = ReactDom.findDOMNode(this.refs.footer) as HTMLDivElement;
+    if (!contentDom) return;
+
+    contentDom.style.minHeight =
+      window.innerHeight -
+      (header ? header.offsetHeight : 0) -
+      (footer ? footer.offsetHeight : 0) +
+      'px';
   };
 
   renderPanel = (props: any) => {
