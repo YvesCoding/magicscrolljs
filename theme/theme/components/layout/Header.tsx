@@ -47,12 +47,6 @@ class Header extends React.Component<HeaderProps, HeaderState> {
       this.setMenuMode(isMobile);
     }
   }
-  timer: number;
-  handleHideMenu = () => {
-    this.setState({
-      menuVisible: false,
-    });
-  };
 
   handleShowMenu = () => {
     this.setState({
@@ -66,25 +60,17 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     });
   };
 
-  handleSelect = (value: string) => {
-    window.location.href = value;
+  setLocaleLinks = (localeLink: string, currentSlug: string, currentLocale: string) => {
+    return currentSlug.replace(currentLocale, localeLink);
   };
 
-  onVersionChange = (value: string) => {
-    if (value === 'v1') {
-      window.open('https://v1.pro.ant.design/');
-    }
-    if (value === 'v2') {
-      window.open('https://v2-pro.ant.design/');
-    }
-  };
   render() {
     const { menuMode, menuVisible } = this.state;
     const {
       pageContext: { webConfig, slug },
     } = this.props;
 
-    let currentLocates = utils.getCurrentLoacle(webConfig, slug);
+    let currentLocate = utils.getCurrentLoacle(webConfig, slug);
     let {
       currentWebConfig: { themeConfig, title },
     } = utils.getCurrentWebConfigBySlug(webConfig, slug);
@@ -102,19 +88,27 @@ class Header extends React.Component<HeaderProps, HeaderState> {
         {nav.map((item: any) => {
           return (
             <Menu.Item key={item.link}>
-              <Link to={item.link}>{item.text}</Link>
+              {utils.isExternal(item.link) ? (
+                <a href={item.link} target="_blank" className="menu-item-link-outside">
+                  {item.text}
+                </a>
+              ) : (
+                <Link to={item.link}>{item.text}</Link>
+              )}
             </Menu.Item>
           );
         })}
       </Menu>,
     ];
 
-    const chooseLanguage = currentLocates ? (
-      <Menu selectedKeys={[currentLocates]}>
+    const chooseLanguage = currentLocate ? (
+      <Menu selectedKeys={[currentLocate]}>
         {Object.keys(locales).map(item => {
           return (
             <Menu.Item key={item}>
-              <Link to={item}>{locales[item].label}</Link>
+              <Link to={this.setLocaleLinks(item, slug, currentLocate as string)}>
+                {locales[item].label}
+              </Link>
             </Menu.Item>
           );
         })}
@@ -158,7 +152,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             </div>
             <div className="header-meta">
               <div className="right-header">
-                {currentLocates ? (
+                {currentLocate ? (
                   <Dropdown overlay={chooseLanguage} placement="bottomLeft">
                     <Button size="small">{themeConfig.selectText}</Button>
                   </Dropdown>

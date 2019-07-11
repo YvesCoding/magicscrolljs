@@ -63,8 +63,6 @@ export default function Template({
     slug: string;
   };
 }) {
-  console.log(data);
-
   const { mdx, allMdx } = data;
   const { frontmatter, fields, code, tableOfContents } = mdx;
   const menuList = resolveSidebarItems(allMdx, pageContext.webConfig, pageContext.slug);

@@ -51,8 +51,6 @@ export default class Article extends React.PureComponent<ArticleProps> {
   node: HTMLElement | null | undefined;
 
   render() {
-    console.log(this.props);
-
     const props = this.props;
     const content = props.content;
     const { meta } = content;
